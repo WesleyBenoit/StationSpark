@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "StationSpark",
+    "slug": "stationspark",
+    "scheme": "stationspark",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.stationspark.mobile",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "StationSpark uses your approximate location to find nearby charging stations. Your exact GPS location is never shown to other users.",
+        "NSPhotoLibraryUsageDescription": "StationSpark lets you choose a profile photo.",
+        "NSUserNotificationsUsageDescription": "StationSpark can notify you about accepted invites and chat messages."
+      }
+    },
+    "android": {
+      "package": "com.stationspark.mobile",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "POST_NOTIFICATIONS"
+      ]
+    },
+    "plugins": [
+      "expo-location",
+      "expo-notifications",
+      "expo-image-picker"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "replace-with-eas-project-id"
+      }
+    }
+  }
+}
