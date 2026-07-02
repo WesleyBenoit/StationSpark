@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StationSpark Demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #050505;
+        --card: #121212;
+        --panel: #18181b;
+        --border: #27272a;
+        --text: #ffffff;
+        --muted: #a1a1aa;
+        --accent: #2f80ff;
+        --success: #30d158;
+        --warning: #ffd60a;
+        --danger: #ff453a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 20% 0%, rgba(47, 128, 255, 0.18), transparent 28rem),
+          linear-gradient(180deg, #050505 0%, #0a0a0b 100%);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        min-height: 44px;
+        border: 0;
+        border-radius: 14px;
+        cursor: pointer;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+      }
+
+      button.secondary {
+        background: #27272a;
+        border: 1px solid #3f3f46;
+      }
+
+      button.ghost {
+        background: transparent;
+        border: 1px solid #3f3f46;
+      }
+
+      button.danger {
+        background: var(--danger);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.42;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .shell {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        padding: 24px;
+        display: grid;
+        grid-template-columns: minmax(310px, 390px) minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      .phone {
+        min-height: 760px;
+        border: 1px solid #2f2f35;
+        border-radius: 34px;
+        background: #070707;
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
+        overflow: hidden;
+        position: sticky;
+        top: 24px;
+      }
+
+      .phone-top {
+        height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #050505;
+      }
+
+      .speaker {
+        width: 78px;
+        height: 7px;
+        border-radius: 999px;
+        background: #26262b;
+      }
+
+      .screen {
+        height: calc(100% - 34px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .mobile-header {
+        padding: 22px 20px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .brand-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .logo {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: rgba(47, 128, 255, 0.18);
+        color: var(--accent);
+        font-weight: 900;
+      }
+
+      .mobile-title {
+        margin: 0;
+        font-size: 25px;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .content {
+        flex: 1;
+        overflow: auto;
+        padding: 18px 16px 98px;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+        position: absolute;
+        inset: auto 0 0;
+        padding: 10px 10px 14px;
+        background: rgba(18, 18, 18, 0.96);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(16px);
+      }
+
+      .tab {
+        min-height: 54px;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--muted);
+        display: grid;
+        place-items: center;
+        gap: 3px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .tab.active {
+        border-color: rgba(47, 128, 255, 0.42);
+        background: rgba(47, 128, 255, 0.14);
+        color: #fff;
+      }
+
+      .tab span {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--card);
+        padding: 16px;
+        margin-bottom: 14px;
+      }
+
+      .station-card,
+      .driver-card,
+      .invite-card {
+        display: grid;
+        gap: 14px;
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.25;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .small {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .metric {
+        border-radius: 14px;
+        background: #09090b;
+        padding: 12px;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 21px;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        border: 1px solid #3f3f46;
+        background: #202024;
+        color: #e4e4e7;
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .chip.accent {
+        border-color: rgba(47, 128, 255, 0.5);
+        background: rgba(47, 128, 255, 0.16);
+        color: #dbeafe;
+      }
+
+      .chip.success {
+        border-color: rgba(48, 209, 88, 0.42);
+        background: rgba(48, 209, 88, 0.12);
+        color: #dcfce7;
+      }
+
+      .chip.warning {
+        border-color: rgba(255, 214, 10, 0.45);
+        background: rgba(255, 214, 10, 0.12);
+        color: #fef9c3;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .notice {
+        border: 1px solid rgba(47, 128, 255, 0.4);
+        background: rgba(47, 128, 255, 0.1);
+        border-radius: 18px;
+        padding: 14px;
+        margin-bottom: 14px;
+      }
+
+      .notice.warning {
+        border-color: rgba(255, 214, 10, 0.45);
+        background: rgba(255, 214, 10, 0.1);
+      }
+
+      .notice.danger {
+        border-color: rgba(255, 69, 58, 0.48);
+        background: rgba(255, 69, 58, 0.12);
+      }
+
+      .map {
+        min-height: 210px;
+        border-radius: 20px;
+        border: 1px solid #2f2f35;
+        background:
+          linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.04) 49%, rgba(255, 255, 255, 0.04) 51%, transparent 52%),
+          linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.04) 49%, rgba(255, 255, 255, 0.04) 51%, transparent 52%),
+          #0c1118;
+        background-size: 42px 42px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .pin {
+        width: 42px;
+        height: 42px;
+        position: absolute;
+        border: 2px solid #fff;
+        border-radius: 50% 50% 50% 8px;
+        transform: rotate(-45deg);
+        display: grid;
+        place-items: center;
+        background: var(--accent);
+        box-shadow: 0 10px 24px rgba(47, 128, 255, 0.4);
+      }
+
+      .pin span {
+        transform: rotate(45deg);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .pin.one {
+        left: 45px;
+        top: 82px;
+      }
+
+      .pin.two {
+        right: 58px;
+        top: 48px;
+        background: #30d158;
+      }
+
+      .pin.three {
+        left: 160px;
+        bottom: 42px;
+        background: #ffd60a;
+      }
+
+      .driver-top {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .avatar {
+        flex: 0 0 auto;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #2f80ff, #30d158);
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+      }
+
+      .form {
+        display: grid;
+        gap: 12px;
+      }
+
+      label {
+        display: grid;
+        gap: 8px;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #09090b;
+        color: #fff;
+        padding: 12px;
+        outline: 0;
+      }
+
+      textarea {
+        min-height: 92px;
+        resize: vertical;
+      }
+
+      .switch-row {
+        min-height: 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        border-radius: 16px;
+        background: #09090b;
+        padding: 12px;
+      }
+
+      .switch {
+        width: 52px;
+        height: 30px;
+        padding: 3px;
+        border-radius: 999px;
+        background: #3f3f46;
+        transition: background 0.2s ease;
+      }
+
+      .switch.on {
+        background: var(--accent);
+      }
+
+      .switch::before {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.2s ease;
+      }
+
+      .switch.on::before {
+        transform: translateX(22px);
+      }
+
+      .chat-log {
+        display: grid;
+        gap: 10px;
+      }
+
+      .bubble {
+        max-width: 82%;
+        padding: 12px;
+        border-radius: 17px;
+        background: #27272a;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .bubble.mine {
+        justify-self: end;
+        background: var(--accent);
+      }
+
+      .desktop-panel {
+        display: grid;
+        gap: 18px;
+        align-content: start;
+      }
+
+      .hero {
+        min-height: 260px;
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        background:
+          linear-gradient(90deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.34)),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='700' viewBox='0 0 1200 700'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23111114'/%3E%3Cstop offset='1' stop-color='%232F80FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='700' fill='%2307080b'/%3E%3Cpath d='M0 520 C220 430 340 560 560 465 C760 380 910 420 1200 260 L1200 700 L0 700 Z' fill='url(%23g)' opacity='.32'/%3E%3Crect x='620' y='260' width='330' height='84' rx='18' fill='%23121212' stroke='%233f3f46'/%3E%3Crect x='662' y='238' width='246' height='50' rx='12' fill='%230d1117' stroke='%232F80FF'/%3E%3Cpath d='M702 262 h142' stroke='%232F80FF' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='700' cy='388' r='56' fill='%23121212' stroke='%23fff' stroke-width='16'/%3E%3Ccircle cx='884' cy='388' r='56' fill='%23121212' stroke='%23fff' stroke-width='16'/%3E%3Cpath d='M670 344 h238 l58 44 h-350 z' fill='%232F80FF'/%3E%3Cpath d='M350 208 h92 v230 h-92 z' fill='%23121212' stroke='%233f3f46'/%3E%3Cpath d='M373 235 h46 v80 h-46 z' fill='%232F80FF' opacity='.9'/%3E%3Cpath d='M396 438 C420 485 476 520 548 528' stroke='%232F80FF' stroke-width='9' fill='none'/%3E%3C/svg%3E");
+        background-size: cover;
+        background-position: center;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .hero h1 {
+        margin: 0;
+        max-width: 620px;
+        font-size: clamp(38px, 5vw, 74px);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        max-width: 560px;
+        margin: 16px 0 0;
+        color: #e4e4e7;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .feature {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: rgba(18, 18, 18, 0.82);
+        padding: 16px;
+      }
+
+      .feature strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .toast {
+        min-height: 48px;
+        border-radius: 16px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        background: rgba(48, 209, 88, 0.12);
+        border: 1px solid rgba(48, 209, 88, 0.38);
+        display: none;
+      }
+
+      .toast.show {
+        display: block;
+      }
+
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+
+        .phone {
+          position: static;
+          min-height: 760px;
+          border-radius: 28px;
+        }
+
+        .desktop-panel {
+          order: -1;
+        }
+
+        .hero {
+          min-height: 210px;
+          padding: 22px;
+          border-radius: 22px;
+        }
+
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="shell">
+        <section class="phone" aria-label="StationSpark interactive mobile demo">
+          <div class="phone-top"><div class="speaker"></div></div>
+          <div class="screen">
+            <header class="mobile-header">
+              <div class="brand-row">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="logo">SS</div>
+                  <div>
+                    <h2 class="mobile-title" id="screenTitle">StationSpark</h2>
+                    <p class="subtitle" id="screenSubtitle">Meet EV drivers while you charge.</p>
+                  </div>
+                </div>
+                <span class="chip success" id="presenceChip">Checked in</span>
+              </div>
+            </header>
+            <section class="content" id="appContent"></section>
+            <nav class="tabs" aria-label="Demo navigation">
+              <button class="tab active" data-tab="home"><span>âŒ</span>Home</button>
+              <button class="tab" data-tab="station"><span>â—Ž</span>Station</button>
+              <button class="tab" data-tab="invites"><span>â†—</span>Invites</button>
+              <button class="tab" data-tab="chat"><span>â–¡</span>Chat</button>
+              <button class="tab" data-tab="safety"><span>â—ˆ</span>Safety</button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="desktop-panel">
+          <div class="hero">
+            <h1>StationSpark</h1>
+            <p>
+              A safety-first social discovery demo for EV drivers at charging stations. Try the
+              mobile frame to check in, send consent-based invites, open chat, and test Adult Mode
+              gating.
+            </p>
+          </div>
+          <div class="feature-grid">
+            <div class="feature">
+              <strong>Station-level presence</strong>
+              <span class="small muted">Drivers are shown at charging stations, never at exact GPS coordinates or parking spots.</span>
+            </div>
+            <div class="feature">
+              <strong>Invite-before-chat</strong>
+              <span class="small muted">Chat stays locked until a nearby driver accepts a time-limited invitation.</span>
+            </div>
+            <div class="feature">
+              <strong>Private Adult Mode</strong>
+              <span class="small muted">Adult preferences appear only after separate opt-in and mutual eligibility.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const state = {
+        tab: "home",
+        checkedIn: true,
+        adultMode: false,
+        adultConsent: false,
+        ghostMode: false,
+        inviteSent: false,
+        inviteAccepted: false,
+        blocked: false,
+        reported: false,
+        chatMessages: [
+          { mine: false, body: "Invite accepted. I am by the station entrance." },
+          { mine: true, body: "Great. I will be there after I check my charge estimate." }
+        ]
+      };
+
+      const titles = {
+        home: ["StationSpark", "Meet EV drivers while you charge."],
+        station: ["Station Detail", "Station-level driver presence."],
+        invites: ["Invites", "Consent-based requests only."],
+        chat: ["Chat", "Unlocked after accepted invite."],
+        safety: ["Safety Center", "Privacy, consent, and controls."]
+      };
+
+      const content = document.getElementById("appContent");
+      const screenTitle = document.getElementById("screenTitle");
+      const screenSubtitle = document.getElementById("screenSubtitle");
+      const presenceChip = document.getElementById("presenceChip");
+
+      function setTab(tab) {
+        state.tab = tab;
+        document.querySelectorAll(".tab").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === tab);
+        });
+        render();
+      }
+
+      function toast(message) {
+        const existing = document.querySelector(".toast");
+        if (existing) existing.remove();
+        const node = document.createElement("div");
+        node.className = "toast show small";
+        node.textContent = message;
+        content.prepend(node);
+        setTimeout(() => node.classList.remove("show"), 3200);
+      }
+
+      function toggleSwitch(key) {
+        state[key] = !state[key];
+        if (key === "adultMode" && !state.adultMode) {
+          state.adultConsent = false;
+        }
+        render();
+      }
+
+      function renderFrame() {
+        const [title, subtitle] = titles[state.tab];
+        screenTitle.textContent = title;
+        screenSubtitle.textContent = subtitle;
+        presenceChip.textContent = state.ghostMode
+          ? "Ghost Mode"
+          : state.checkedIn
+            ? "Checked in"
+            : "Hidden";
+        presenceChip.className = `chip ${state.ghostMode ? "warning" : state.checkedIn ? "success" : ""}`;
+      }
+
+      function home() {
+        return `
+          <div class="notice small">Your location is used only to find nearby stations. Other drivers see station-level presence only.</div>
+          <div class="map" aria-label="Mock charging station map">
+            <div class="pin one"><span>16</span></div>
+            <div class="pin two"><span>8</span></div>
+            <div class="pin three"><span>10</span></div>
+          </div>
+          <div class="card station-card">
+            <div class="row">
+              <div>
+                <h3 class="card-title">Tesla Supercharger - Austin South Congress</h3>
+                <p class="subtitle">1000 S Congress Ave, Austin</p>
+              </div>
+              <span class="chip accent">NACS</span>
+            </div>
+            <div class="metrics">
+              <div class="metric"><strong>2</strong><span>Charging</span></div>
+              <div class="metric"><strong>1</strong><span>On the way</span></div>
+              <div class="metric"><strong>1</strong><span>Recently active</span></div>
+              <div class="metric"><strong>2</strong><span>Open to chat</span></div>
+            </div>
+            <div class="actions">
+              <button onclick="setTab('station')">View station</button>
+              <button class="secondary" onclick="state.checkedIn=true; render(); toast('Checked in at station level.')">Check in</button>
+            </div>
+          </div>
+          <div class="card station-card">
+            <h3 class="card-title">EA Downtown Market</h3>
+            <p class="subtitle">500 E 4th St, Austin</p>
+            <div class="chips"><span class="chip">8 chargers</span><span class="chip">CCS</span><span class="chip success">1 arriving</span></div>
+          </div>
+        `;
+      }
+
+      function station() {
+        const adultOption = state.adultMode && state.adultConsent
+          ? '<button class="ghost" onclick="state.inviteSent=true; setTab(\\'invites\\')">Adult private invite</button>'
+          : '<button class="ghost" disabled>Adult private invite locked</button>';
+        return `
+          <div class="notice small">No license plates, exact GPS coordinates, or parking spots are shown in public station presence.</div>
+          <div class="card">
+            <h3 class="card-title">Tesla Supercharger - Austin South Congress</h3>
+            <p class="subtitle">16 chargers Â· 2 charging Â· 1 on the way Â· estimated departures visible</p>
+            <div class="chips"><span class="chip success">Open to chat</span><span class="chip accent">Networking</span><span class="chip">Talking Tesla</span></div>
+          </div>
+          <div class="card driver-card">
+            <div class="driver-top">
+              <div class="avatar">M</div>
+              <div>
+                <h3 class="card-title">Maya</h3>
+                <p class="subtitle">Pearl white Tesla Model Y Â· until 4:45 PM</p>
+              </div>
+            </div>
+            <div class="chips"><span class="chip">Tesla</span><span class="chip">Road trips</span><span class="chip">Coffee</span></div>
+            <div class="actions">
+              <button onclick="state.inviteSent=true; setTab('invites')">Invite</button>
+              <button class="secondary" onclick="state.reported=true; setTab('safety')">Report</button>
+            </div>
+          </div>
+          <div class="card driver-card">
+            <div class="driver-top">
+              <div class="avatar">J</div>
+              <div>
+                <h3 class="card-title">Jordan</h3>
+                <p class="subtitle">Forest green Rivian R1T Â· networking</p>
+              </div>
+            </div>
+            <div class="chips"><span class="chip">EVs</span><span class="chip">Business</span><span class="chip">Networking</span></div>
+            <div class="actions">
+              <button onclick="state.inviteSent=true; setTab('invites')">Business invite</button>
+              ${adultOption}
+            </div>
+          </div>
+        `;
+      }
+
+      function invites() {
+        if (!state.inviteSent) {
+          return `
+            <div class="notice small">Users cannot directly message strangers. Send an invite from a station driver card first.</div>
+            <div class="card">
+              <h3 class="card-title">No active invites</h3>
+              <p class="subtitle">Pending invites expire after 10 minutes.</p>
+              <button onclick="setTab('station')">Find drivers</button>
+            </div>
+          `;
+        }
+        return `
+          <div class="card invite-card">
+            <div class="row">
+              <div>
+                <h3 class="card-title">Chat while charging</h3>
+                <p class="subtitle">${state.inviteAccepted ? "Accepted" : "Pending"} Â· expires after 10 minutes</p>
+              </div>
+              <span class="chip ${state.inviteAccepted ? "success" : "warning"}">${state.inviteAccepted ? "Accepted" : "Pending"}</span>
+            </div>
+            <p class="small muted">Optional note: Want to compare road trip charging tips?</p>
+            <div class="actions">
+              <button onclick="state.inviteAccepted=true; render(); toast('Invite accepted. Chat is now unlocked.')">Accept</button>
+              <button class="secondary" onclick="state.inviteSent=false; state.inviteAccepted=false; render()">Decline</button>
+            </div>
+            <button ${state.inviteAccepted ? "" : "disabled"} onclick="setTab('chat')">Open chat</button>
+          </div>
+        `;
+      }
+
+      function chat() {
+        if (!state.inviteAccepted) {
+          return `
+            <div class="notice warning small">Chat is locked until an invite is accepted. This mirrors the backend RLS policy.</div>
+            <div class="card"><button onclick="setTab('invites')">Go to invites</button></div>
+          `;
+        }
+        return `
+          <div class="notice small">Block, report, or end chat at any time. Meet in public station areas.</div>
+          <div class="card">
+            <div class="chat-log">
+              ${state.chatMessages.map((message) => `<div class="bubble ${message.mine ? "mine" : ""}">${message.body}</div>`).join("")}
+            </div>
+          </div>
+          <div class="card form">
+            <div class="chips">
+              <button class="ghost" onclick="sendQuick('Still charging?')">Still charging?</button>
+              <button class="ghost" onclick="sendQuick('Coffee nearby?')">Coffee nearby?</button>
+            </div>
+            <label>Message
+              <input id="messageInput" placeholder="Message after accepted invite" />
+            </label>
+            <div class="actions">
+              <button onclick="sendMessage()">Send</button>
+              <button class="secondary" onclick="toast('Trusted contact sharing is a Phase 2 placeholder.')">Share meetup</button>
+            </div>
+            <div class="actions">
+              <button class="danger" onclick="state.blocked=true; render(); toast('User blocked. Mutual visibility is removed.')">Block</button>
+              <button class="secondary" onclick="state.inviteAccepted=false; render()">End chat</button>
+            </div>
+          </div>
+        `;
+      }
+
+      function safety() {
+        return `
+          <div class="notice danger small">If you feel unsafe, leave the area if possible and contact local emergency services. App reports are not emergency response.</div>
+          <div class="card form">
+            <div class="switch-row">
+              <div>
+                <strong>Adult Mode</strong>
+                <p class="subtitle">Private opt-in adult social preferences for verified adults.</p>
+              </div>
+              <button class="switch ${state.adultMode ? "on" : ""}" aria-label="Toggle Adult Mode" onclick="toggleSwitch('adultMode')"></button>
+            </div>
+            <div class="switch-row">
+              <div>
+                <strong>Adult consent</strong>
+                <p class="subtitle">Required before Adult Mode visibility can appear.</p>
+              </div>
+              <button class="switch ${state.adultConsent ? "on" : ""}" ${state.adultMode ? "" : "disabled"} aria-label="Toggle Adult consent" onclick="toggleSwitch('adultConsent')"></button>
+            </div>
+            <div class="switch-row">
+              <div>
+                <strong>Ghost Mode</strong>
+                <p class="subtitle">Hide station presence and profile from discovery.</p>
+              </div>
+              <button class="switch ${state.ghostMode ? "on" : ""}" aria-label="Toggle Ghost Mode" onclick="toggleSwitch('ghostMode')"></button>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Moderation</h3>
+            <p class="subtitle">${state.reported ? "A report has been saved for review." : "Reports are saved while users remain usable unless banned."}</p>
+            <div class="chips">
+              <span class="chip ${state.blocked ? "warning" : ""}">${state.blocked ? "1 blocked user" : "No blocked users"}</span>
+              <span class="chip ${state.reported ? "warning" : ""}">${state.reported ? "Report submitted" : "No reports"}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      function sendQuick(body) {
+        state.chatMessages.push({ mine: true, body });
+        render();
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const value = input.value.trim();
+        if (!value) return;
+        state.chatMessages.push({ mine: true, body: value });
+        render();
+      }
+
+      function render() {
+        renderFrame();
+        const views = { home, station, invites, chat, safety };
+        content.innerHTML = views[state.tab]();
+      }
+
+      document.querySelectorAll(".tab").forEach((button) => {
+        button.addEventListener("click", () => setTab(button.dataset.tab));
+      });
+
+      render();
+    </script>
+  </body>
+</html>
