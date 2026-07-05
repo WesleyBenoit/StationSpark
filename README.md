@@ -84,10 +84,25 @@ npm run test
 
 ## Continuous Integration
 
-`.github/workflows/ci.yml` runs typecheck, lint, and tests on every push and pull
-request to `main`. Dependabot (`.github/dependabot.yml`) opens weekly update PRs for
-npm and GitHub Actions dependencies. See `SECURITY.md` for the vulnerability
-disclosure process.
+`.github/workflows/ci.yml` runs typecheck, lint, and tests with coverage on every
+push and pull request to `main`. Dependabot (`.github/dependabot.yml`) opens weekly
+update PRs for npm and GitHub Actions dependencies. See `SECURITY.md` for the
+vulnerability disclosure process and `CONTRIBUTING.md` for the contribution workflow.
+
+## Reliability layer
+
+Shared infrastructure in `src/lib` keeps the app observable and resilient:
+
+- `logger.ts` — leveled, structured logging with pluggable transports. Product
+  code logs through this, never raw `console.*`.
+- `errorReporting.ts` — `captureException` with a pluggable reporter (Sentry-ready,
+  no-op by default). The root `ErrorBoundary` routes crashes through it.
+- `env.ts` — Zod-validated runtime configuration. `getEnvDiagnostics()` reports
+  malformed values and which optional features are disabled.
+- `retry.ts` — `withRetry` exponential backoff with jitter for transient
+  network failures, with a policy that avoids retrying client/validation errors.
+
+Run `npm run test:coverage` for a coverage report over the `src/lib` logic.
 
 ## Supabase Notes
 

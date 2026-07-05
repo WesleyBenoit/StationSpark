@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest an idea or improvement for StationSpark
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What need or gap does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to see happen?
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety review
+      description: StationSpark is a safety-first product.
+      options:
+        - label: This request does not weaken 18+ gating, consent, blocking, or location privacy
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

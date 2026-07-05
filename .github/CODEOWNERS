@@ -1,0 +1,14 @@
+# Code ownership for review routing.
+# Update the owner handles to your team/individuals.
+
+# Default owner for everything in the repo.
+*                       @WesleyBenoit
+
+# Safety-critical policy, validation, and database rules require careful review.
+/src/lib/policies.ts    @WesleyBenoit
+/src/lib/validation.ts  @WesleyBenoit
+/supabase/              @WesleyBenoit
+
+# CI, security, and governance.
+/.github/               @WesleyBenoit
+/SECURITY.md            @WesleyBenoit

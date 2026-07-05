@@ -2,6 +2,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 
 import { Button } from "@/components/Button";
+import { captureException } from "@/lib/errorReporting";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -20,6 +21,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
+    captureException(error, {
+      source: "ErrorBoundary",
+      extra: { componentStack: info.componentStack }
+    });
     this.props.onError?.(error, info);
   }
 

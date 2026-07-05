@@ -19,7 +19,7 @@ export default function App() {
   }, [bootstrap]);
 
   return (
-    <ErrorBoundary onError={(error) => console.error("Unhandled app error:", error)}>
+    <ErrorBoundary>
       <SafeAreaProvider>
         <NavigationContainer>
           <StatusBar style="light" />
