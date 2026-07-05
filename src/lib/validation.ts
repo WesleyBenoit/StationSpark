@@ -17,13 +17,16 @@ export function hasExplicitPublicContent(value?: string | null) {
   return Boolean(value && explicitPublicContentPattern.test(value));
 }
 
-const publicText = z
-  .string()
-  .trim()
-  .max(240)
-  .refine((value) => !hasExplicitPublicContent(value), {
-    message: "Public profile fields cannot include explicit adult content."
-  });
+function publicText(options: { min?: number; max: number }) {
+  return z
+    .string()
+    .trim()
+    .min(options.min ?? 0)
+    .max(options.max)
+    .refine((value) => !hasExplicitPublicContent(value), {
+      message: "Public profile fields cannot include explicit adult content."
+    });
+}
 
 export const signInSchema = z.object({
   email: z.string().trim().email(),
@@ -40,8 +43,8 @@ export const signUpSchema = signInSchema.extend({
 });
 
 export const onboardingSchema = z.object({
-  display_name: publicText.min(1).max(48),
-  bio: publicText.max(180).optional(),
+  display_name: publicText({ min: 1, max: 48 }),
+  bio: publicText({ max: 180 }).optional(),
   profile_photo_url: z.string().url().optional().or(z.literal("")),
   vehicle_make: z.string().trim().min(1).max(32),
   vehicle_model: z.string().trim().min(1).max(48),
