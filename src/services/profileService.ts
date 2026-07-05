@@ -4,7 +4,7 @@ import type { Profile, VisibilityMode } from "@/types/domain";
 
 function normalizeAdultInterests(input: OnboardingInput) {
   if (input.adult_mode_enabled) return input.interests;
-  return input.interests.filter((interest) => interest !== "Adult connections");
+  return input.interests.filter((interest) => interest !== "Adult connection");
 }
 
 async function uploadProfilePhoto(userId: string, uri?: string | null) {
@@ -57,7 +57,7 @@ export async function upsertProfile(userId: string, input: OnboardingInput) {
 export async function updateAdultMode(enabled: boolean, consentAccepted: boolean) {
   requireSupabaseConfig();
   if (enabled && !consentAccepted) {
-    throw new Error("Adult Mode requires explicit consent.");
+    throw new Error("Private Intent (18+) requires explicit consent.");
   }
 
   const userId = (await supabase.auth.getUser()).data.user?.id;
@@ -75,7 +75,7 @@ export async function updateAdultMode(enabled: boolean, consentAccepted: boolean
     if (profileError) throw profileError;
 
     updates.default_status = "open_to_chat";
-    updates.interests = currentProfile.interests.filter((interest) => interest !== "Adult connections");
+    updates.interests = currentProfile.interests.filter((interest) => interest !== "Adult connection");
   }
 
   const { data, error } = await supabase.from("profiles").update(updates).eq("id", userId).select("*").single<Profile>();

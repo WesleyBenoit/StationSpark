@@ -49,7 +49,7 @@ export function UserCard({ presence, onInvite, onReport, inviteDisabled }: UserC
 
       <View className="flex-row flex-wrap gap-2">
         {presence.interests.slice(0, 4).map((interest) => (
-          <Badge key={interest} label={interest} tone={interest === "Adult connections" ? "warning" : "default"} />
+          <Badge key={interest} label={interest} tone={interest === "Adult connection" ? "warning" : "default"} />
         ))}
       </View>
 

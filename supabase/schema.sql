@@ -256,7 +256,15 @@ returns boolean
 language sql
 immutable
 as $$
-  select coalesce(value, '') ~* '\m(hookup|sex|nude|nsfw|fetish|escort|xxx)\M';
+  select coalesce(value, '') ~* '\m(hookup|sex|nude|nsfw|fetish|escort|prostitution|trafficking|xxx)\M';
+$$;
+
+create or replace function public.contains_unsafe_private_invite_content(value text)
+returns boolean
+language sql
+immutable
+as $$
+  select coalesce(value, '') ~* '\m(underage|minor|forced?|coerc(e|ion)|rape|nudes?|escort|prostitution|trafficking|paid service|cash app)\M';
 $$;
 
 create or replace function public.is_blocked_between(first_user_id uuid, second_user_id uuid)
@@ -422,11 +430,11 @@ begin
       and u.terms_accepted_at is not null
       and u.banned = false
   ) then
-    raise exception 'Adult Mode requires an active 18+ account.';
+    raise exception 'Private Intent requires an active 18+ account.';
   end if;
 
-  if 'Adult connections' = any(new.interests) and new.adult_mode_enabled = false then
-    raise exception 'Adult connections interest requires Adult Mode.';
+  if 'Adult connection' = any(new.interests) and new.adult_mode_enabled = false then
+    raise exception 'Adult connection interest requires Private Intent.';
   end if;
 
   return new;
@@ -446,7 +454,7 @@ set search_path = public
 as $$
 begin
   if new.status = 'adult_mode_available' and public.user_can_use_adult_status(new.user_id) = false then
-    raise exception 'Adult status requires Adult Mode.';
+    raise exception 'Private Intent status requires Private Intent.';
   end if;
 
   if exists (select 1 from public.users u where u.id = new.user_id and u.banned = true) then
@@ -487,6 +495,14 @@ begin
 
     if public.can_send_invite(new.sender_id, new.recipient_id, new.invite_type) = false then
       raise exception 'Invite is not allowed.';
+    end if;
+
+    if new.invite_type = 'adult_private' and (new.message is null or char_length(trim(new.message)) < 12) then
+      raise exception 'Private Intent invites require a short message before acceptance.';
+    end if;
+
+    if new.invite_type = 'adult_private' and public.contains_unsafe_private_invite_content(new.message) then
+      raise exception 'Private Intent invite blocked by safety policy.';
     end if;
   end if;
 
@@ -894,7 +910,7 @@ select
   ci.started_at,
   case
     when public.can_pair_adult(auth.uid(), ci.user_id) then p.interests
-    else array_remove(p.interests, 'Adult connections')
+    else array_remove(p.interests, 'Adult connection')
   end as interests,
   'charging'::text as presence_kind,
   public.can_pair_adult(auth.uid(), ci.user_id) as can_send_adult_invite
@@ -927,7 +943,7 @@ select
   coalesce(ci.ended_at, ci.started_at) as started_at,
   case
     when public.can_pair_adult(auth.uid(), ci.user_id) then p.interests
-    else array_remove(p.interests, 'Adult connections')
+    else array_remove(p.interests, 'Adult connection')
   end as interests,
   'recently_active'::text as presence_kind,
   public.can_pair_adult(auth.uid(), ci.user_id) as can_send_adult_invite
@@ -960,7 +976,7 @@ select
   ai.created_at as started_at,
   case
     when public.can_pair_adult(auth.uid(), ai.user_id) then p.interests
-    else array_remove(p.interests, 'Adult connections')
+    else array_remove(p.interests, 'Adult connection')
   end as interests,
   'on_the_way'::text as presence_kind,
   public.can_pair_adult(auth.uid(), ai.user_id) as can_send_adult_invite

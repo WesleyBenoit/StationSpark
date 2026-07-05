@@ -102,8 +102,8 @@ export function CheckInScreen() {
         {selectedStatus === adultPresenceStatus ? (
           <SafetyNotice
             tone="warning"
-            title="Private adult status"
-            body="This will only be visible as an adult invite option to people who also enabled Adult Mode."
+            title="Private Intent status"
+            body="This appears only as a private invite option to people who also enabled Private Intent (18+)."
           />
         ) : null}
 

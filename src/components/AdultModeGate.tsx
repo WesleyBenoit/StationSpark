@@ -23,9 +23,9 @@ export function AdultModeGate({
     <Card className="gap-4">
       <View className="flex-row items-center justify-between">
         <View className="mr-4 flex-1">
-          <Text className="text-lg font-bold text-white">Adult Mode</Text>
+          <Text className="text-lg font-bold text-white">Private Intent (18+)</Text>
           <Text className="mt-1 text-sm leading-5 text-charge-muted">
-            Private opt-in adult social preferences for verified adults.
+            Private opt-in adult connection preferences for verified adults.
           </Text>
         </View>
         <Switch
@@ -40,12 +40,12 @@ export function AdultModeGate({
         <>
           <SafetyNotice
             title="Consent required"
-            body="Adult preferences stay private, appear only when both people enabled Adult Mode, and can be disabled anytime."
+            body="Private intent stays hidden by default, appears only when both people enable it, and can be disabled anytime."
             tone="warning"
           />
           <View className="flex-row items-center justify-between rounded-2xl bg-zinc-900 p-4">
             <Text className="mr-4 flex-1 text-sm leading-5 text-white">
-              I confirm I am 18+ and consent to private Adult Mode visibility.
+              I confirm I am 18+ and consent to private intent visibility.
             </Text>
             <Switch
               value={consentAccepted}

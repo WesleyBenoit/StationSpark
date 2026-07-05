@@ -46,7 +46,12 @@ export function InviteComposerScreen({ navigation, route }: Props) {
 
   const submit = async () => {
     if (isAdultInvite && !adultConsent) {
-      Alert.alert("Consent required", "Confirm adult invite consent before sending.");
+      Alert.alert("Consent required", "Confirm Private Intent consent before sending.");
+      return;
+    }
+
+    if (isAdultInvite && message.trim().length < 12) {
+      Alert.alert("Message required", "Add a short message so the recipient knows what you want before accepting.");
       return;
     }
 
@@ -83,20 +88,20 @@ export function InviteComposerScreen({ navigation, route }: Props) {
 
         {!availableInviteTypes.includes(adultInviteType) ? (
           <Text className="text-sm leading-5 text-charge-muted">
-            Adult private invites appear only when both drivers enabled Adult Mode.
+            Private Intent invites appear only when both drivers enabled Private Intent (18+).
           </Text>
         ) : null}
 
         {isAdultInvite ? (
           <View className="gap-3">
             <SafetyNotice
-              title="Private adult invite"
+              title="Private Intent invite"
               tone="warning"
-              body="This invite is private, opt-in, and consent-based. Stop immediately if consent is withdrawn."
+              body="This invite is private, opt-in, and consent-based. No paid services, coercion, minors, explicit images, trafficking, or unsafe requests."
             />
             <View className="flex-row items-center justify-between rounded-2xl bg-zinc-900 p-4">
               <Text className="mr-4 flex-1 text-sm leading-5 text-white">
-                I understand this is private and requires mutual consent.
+                I understand this is private, age-gated, and requires mutual consent.
               </Text>
               <Switch
                 value={adultConsent}
@@ -109,13 +114,13 @@ export function InviteComposerScreen({ navigation, route }: Props) {
         ) : null}
 
         <View className="gap-2">
-          <Text className="text-sm font-semibold text-white">Optional note</Text>
+          <Text className="text-sm font-semibold text-white">{isAdultInvite ? "Short intent message" : "Optional note"}</Text>
           <TextInput
             value={message}
             onChangeText={setMessage}
             multiline
             maxLength={180}
-            placeholder="Coffee nearby? Talking Model Y mods?"
+            placeholder={isAdultInvite ? "I am interested in a private adult connection if the chemistry is mutual. Chat first?" : "Coffee nearby? Talking Model Y mods?"}
             placeholderTextColor="#71717A"
             className="min-h-24 rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-base text-white"
           />

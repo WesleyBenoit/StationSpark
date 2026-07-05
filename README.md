@@ -2,7 +2,7 @@
 
 StationSpark is a mobile-first social discovery app for Tesla and EV drivers at charging stations.
 
-Positioning: StationSpark helps EV drivers connect socially, professionally, and safely while charging. It is not positioned as a sexual app. Adult Mode is private, opt-in, age-gated, consent-based, and hidden unless both users enabled it.
+Positioning: StationSpark helps EV drivers connect socially, professionally, and safely while charging. It is not positioned as a sexual app. Private Intent (18+) is private, opt-in, age-gated, consent-based, and hidden unless both users enabled it.
 
 ## Stack
 
@@ -33,7 +33,12 @@ supabase/
   schema.sql        Tables, constraints, RLS, views, RPCs, triggers
   seed.sql          Demo charging stations
 tests/
-  policies.test.ts  Invite, chat, adult mode, and blocking tests
+  policies.test.ts  Invite, chat, private intent, and blocking tests
+docs/
+  index.html        Static interactive StationSpark demo
+  data/             Generated Tesla charger catalog for the demo
+scripts/
+  sync-tesla-chargers.ps1  Refreshes U.S. Tesla charger locations
 ```
 
 ## Setup
@@ -87,7 +92,7 @@ npm run test
 
 - Required tables from the MVP spec
 - RLS for users, profiles, stations, check-ins, arrival intents, invites, chats, messages, blocks, reports, ratings, and subscriptions
-- `station_presence_public` and `arrival_intents_public` views that hide raw Adult Mode flags and remove adult interests unless both users opted in
+- `station_presence_public` and `arrival_intents_public` views that hide raw private-intent flags and remove adult interests unless both users opted in
 - `send_invite` RPC with adult-mode, age, ban, and block checks
 - `accept_invite` RPC that creates a chat only after acceptance
 - Message insert policy requiring an accepted invite and unblocked participants
@@ -117,7 +122,7 @@ Phase 1 implemented:
 - Invite composer and invite inbox
 - Accepted invite opens chat
 - Block and report flows
-- Adult Mode gating
+- Private Intent (18+) gating
 - Safety Center and basic settings
 
 Phase 2 placeholders included:
@@ -141,8 +146,8 @@ Phase 3 intentionally not implemented:
 The app and database enforce these boundaries:
 
 - Users must confirm they are 18+ before using the app.
-- Adult Mode is off by default.
-- Adult interests and adult invite capability are visible only when both users enabled Adult Mode.
+- Private Intent (18+) is off by default.
+- Adult connection intent and private invite capability are visible only when both users enabled Private Intent (18+) and separate consent.
 - Public profile fields reject explicit adult terms.
 - Public station presence never stores or shows exact GPS location, parking spot, or license plate.
 - Invites expire after 10 minutes by default.
@@ -155,14 +160,36 @@ The app and database enforce these boundaries:
 
 If `EXPO_PUBLIC_MAPBOX_PUBLIC_TOKEN` is present, `MapViewWrapper` uses `@rnmapbox/maps`. Otherwise it falls back to `react-native-maps`. Mapbox requires an Expo development build or native build configuration; Expo Go may not support it.
 
+## Tesla Charger Catalog
+
+The static demo loads `docs/data/tesla-us-chargers.js`, generated from the AFDC Alternative Fueling Stations ArcGIS layer. The current snapshot includes U.S. Tesla Supercharger and Tesla Destination records with station names, addresses, coordinates, connector types, and port counts.
+
+The demo also includes a `Me` profile setup flow for public driver cards: optional driver photo, optional Tesla photo, Tesla model/color, bio, interests, social intent, and a nearby-driver discovery stack. Public profile fields remain separate from Private Intent (18+). When Private Intent (18+) and separate consent are enabled, the station and profile discovery stacks switch to verified adults with clearer adult connection labels, private intent chips, and invite messages that explain what the sender wants before acceptance.
+
+Refresh the snapshot with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/sync-tesla-chargers.ps1
+```
+
+This is location/catalog data, not live stall availability. Production live availability would need a licensed provider, official Tesla integration where permitted, or a supported charger-network data agreement.
+
+Run the static demo browser checks with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test-demo.ps1
+```
+
 ## App Store Language
 
 Use:
 
 > StationSpark helps EV drivers connect socially, professionally, and safely while charging.
 
-Adult Mode wording:
+Private Intent wording:
 
-> Private opt-in adult social preferences for verified adults.
+> Private opt-in adult connection intent for verified adults.
+
+Private Intent (18+) must not be marketed as the app's primary purpose and must prohibit paid services, coercion, minors, explicit public content, trafficking, harassment, and unsafe requests.
 
 Do not market StationSpark as a hookup app.

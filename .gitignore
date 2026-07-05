@@ -7,3 +7,6 @@ web-build
 .DS_Store
 coverage
 *.log
+stationspark-tunnel.*
+
+.vercel

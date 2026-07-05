@@ -16,11 +16,11 @@ export const interestOptions = [
   "Car mods",
   "Networking",
   "Casual conversation",
-  "Adult connections"
+  "Adult connection"
 ] as const;
 
 export const publicInterestOptions = interestOptions.filter(
-  (interest) => interest !== "Adult connections"
+  (interest) => interest !== "Adult connection"
 );
 
 export const presenceStatuses = [
@@ -71,7 +71,7 @@ export const statusLabels: Record<PresenceStatus, string> = {
   networking: "Networking",
   talking_tesla: "Talking Tesla",
   do_not_disturb: "Do not disturb",
-  adult_mode_available: "Private adult mode"
+  adult_mode_available: "Private Intent (18+)"
 };
 
 export const inviteLabels: Record<InviteType, string> = {
@@ -81,5 +81,5 @@ export const inviteLabels: Record<InviteType, string> = {
   business: "Business networking",
   coffee: "Grab coffee nearby",
   road_trip_tips: "Road trip tips",
-  adult_private: "Private adult invite"
+  adult_private: "Private Intent invite"
 };

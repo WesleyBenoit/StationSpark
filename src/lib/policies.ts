@@ -94,7 +94,7 @@ export function getVisibleInterests(params: {
   const { viewer, subject, interests } = params;
 
   if (canPairForAdultMode(viewer, subject)) return interests;
-  return interests.filter((interest) => interest !== "Adult connections");
+  return interests.filter((interest) => interest !== "Adult connection");
 }
 
 export function canUseAdultStatus(profile: Pick<Profile, "adult_mode_enabled">, is18Plus: boolean) {

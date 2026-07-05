@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">StationSpark logo</title>
+  <desc id="desc">A map pin with an electric spark for an EV charging social network.</desc>
+  <defs>
+    <linearGradient id="spark" x1="96" y1="72" x2="420" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset=".58" stop-color="#4DD7BD"/>
+      <stop offset="1" stop-color="#D4F36A"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#030706"/>
+  <path d="M256 54c87 0 157 67 157 150 0 112-130 214-149 228a14 14 0 0 1-16 0C229 418 99 316 99 204 99 121 169 54 256 54Z" fill="#07120F" stroke="url(#spark)" stroke-width="26"/>
+  <path d="M276 121 179 266h70l-17 118 104-164h-70l10-99Z" fill="url(#spark)"/>
+  <path d="M181 190h55M278 190h54" stroke="#F8FFF8" stroke-width="24" stroke-linecap="round" opacity=".92"/>
+</svg>

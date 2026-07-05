@@ -8,6 +8,7 @@ import {
   isBlockedBetween,
   isInviteExpired
 } from "@/lib/policies";
+import { inviteSchema } from "@/lib/validation";
 import type { Invite } from "@/types/domain";
 
 const baseUser = {
@@ -16,9 +17,9 @@ const baseUser = {
   banned: false
 };
 
-describe("adult mode visibility", () => {
-  it("hides adult interests unless both users enabled adult mode", () => {
-    const interests = ["EVs", "Adult connections", "Coffee"];
+describe("private intent visibility", () => {
+  it("hides private intent interests unless both users enabled Private Intent", () => {
+    const interests = ["EVs", "Adult connection", "Coffee"];
     const visible = getVisibleInterests({
       viewer: { ...baseUser, userId: "viewer", adultModeEnabled: true },
       subject: { ...baseUser, userId: "subject", adultModeEnabled: false },
@@ -29,7 +30,7 @@ describe("adult mode visibility", () => {
   });
 
   it("shows adult interests only when both users are 18+ and opted in", () => {
-    const interests = ["EVs", "Adult connections"];
+    const interests = ["EVs", "Adult connection"];
     const visible = getVisibleInterests({
       viewer: { ...baseUser, userId: "viewer", adultModeEnabled: true },
       subject: { ...baseUser, userId: "subject", adultModeEnabled: true },
@@ -61,7 +62,7 @@ describe("invite gating", () => {
     ).toBe(false);
   });
 
-  it("blocks adult private invites unless both users enabled Adult Mode", () => {
+  it("blocks Private Intent invites unless both users enabled Private Intent", () => {
     expect(
       canSendInvite({
         sender: { ...baseUser, userId: "sender", adultModeEnabled: true },
@@ -71,7 +72,7 @@ describe("invite gating", () => {
     ).toBe(false);
   });
 
-  it("allows adult private invites only for mutual adult opt-in", () => {
+  it("allows Private Intent invites only for mutual adult opt-in", () => {
     expect(
       canSendInvite({
         sender: { ...baseUser, userId: "sender", adultModeEnabled: true },
@@ -79,6 +80,23 @@ describe("invite gating", () => {
         inviteType: "adult_private"
       })
     ).toBe(true);
+  });
+
+  it("requires a short safety-screened message for Private Intent invites", () => {
+    const baseInvite = {
+      recipient_id: "00000000-0000-4000-8000-000000000001",
+      station_id: "00000000-0000-4000-8000-000000000002",
+      invite_type: "adult_private" as const
+    };
+
+    expect(() => inviteSchema.parse(baseInvite)).toThrow();
+    expect(() => inviteSchema.parse({ ...baseInvite, message: "cash app first" })).toThrow();
+    expect(() =>
+      inviteSchema.parse({
+        ...baseInvite,
+        message: "I am interested in a private adult connection if the chemistry is mutual. Chat first?"
+      })
+    ).not.toThrow();
   });
 });
 

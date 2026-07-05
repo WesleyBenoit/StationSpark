@@ -51,8 +51,8 @@ export function ProfileScreen() {
   const defaultStatus = watch("default_status");
   const visibilityMode = watch("visibility_mode");
 
-  const toggleInterest = (interest: string) => {
-    if (interest === "Adult connections" && !adultModeEnabled) return;
+  const toggleInterest = (interest: (typeof interestOptions)[number]) => {
+    if (interest === "Adult connection" && !adultModeEnabled) return;
     const next = interests.includes(interest)
       ? interests.filter((item) => item !== interest)
       : [...interests, interest];
@@ -65,7 +65,7 @@ export function ProfileScreen() {
       setValue("adult_mode_consent", false, { shouldValidate: true });
       setValue(
         "interests",
-        interests.filter((interest) => interest !== "Adult connections") as OnboardingInput["interests"],
+        interests.filter((interest) => interest !== "Adult connection") as OnboardingInput["interests"],
         { shouldValidate: true }
       );
       if (defaultStatus === adultPresenceStatus) {
@@ -172,7 +172,7 @@ export function ProfileScreen() {
               key={interest}
               label={interest}
               selected={interests.includes(interest)}
-              disabled={interest === "Adult connections" && !adultModeEnabled}
+              disabled={interest === "Adult connection" && !adultModeEnabled}
               onPress={() => toggleInterest(interest)}
             />
           ))}

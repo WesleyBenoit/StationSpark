@@ -31,7 +31,7 @@ export function SafetyCenterScreen() {
 
   const toggleAdultMode = async (enabled: boolean) => {
     if (enabled && !adultConsent) {
-      Alert.alert("Consent required", "Enable the consent switch before turning on Adult Mode.");
+      Alert.alert("Consent required", "Enable the consent switch before turning on Private Intent (18+).");
       return;
     }
 
@@ -39,7 +39,7 @@ export function SafetyCenterScreen() {
       const nextProfile = await profileService.updateAdultMode(enabled, adultConsent);
       setProfile(nextProfile);
     } catch (error) {
-      Alert.alert("Could not update Adult Mode", error instanceof Error ? error.message : "Please try again.");
+      Alert.alert("Could not update Private Intent", error instanceof Error ? error.message : "Please try again.");
     }
   };
 
@@ -66,7 +66,7 @@ export function SafetyCenterScreen() {
       <Card className="mt-5 gap-4">
         <Text className="text-lg font-bold text-white">Consent rules</Text>
         <Text className="text-sm leading-5 text-charge-muted">
-          Chat requires accepted invites. Adult Mode is off by default, private, and visible only when both drivers explicitly enable it.
+          Chat requires accepted invites. Private Intent (18+) is off by default, private, and visible only when both drivers explicitly enable it.
         </Text>
         <Button title="Report a user" variant="secondary" onPress={() => Alert.alert("Report", "Open a driver card to report a specific user.")} />
       </Card>
@@ -74,9 +74,9 @@ export function SafetyCenterScreen() {
       <Card className="mt-5 gap-4">
         <View className="flex-row items-center justify-between">
           <View className="mr-4 flex-1">
-            <Text className="text-lg font-bold text-white">Adult Mode</Text>
+            <Text className="text-lg font-bold text-white">Private Intent (18+)</Text>
             <Text className="mt-1 text-sm leading-5 text-charge-muted">
-              Private opt-in adult social preferences for verified adults.
+              Private opt-in adult connection preferences for verified adults.
             </Text>
           </View>
           <Switch
@@ -88,7 +88,7 @@ export function SafetyCenterScreen() {
         </View>
         <View className="flex-row items-center justify-between rounded-2xl bg-zinc-900 p-4">
           <Text className="mr-4 flex-1 text-sm leading-5 text-white">
-            I confirm I am 18+ and consent to private Adult Mode visibility.
+            I confirm I am 18+ and consent to private intent visibility.
           </Text>
           <Switch
             value={adultConsent}
@@ -97,6 +97,13 @@ export function SafetyCenterScreen() {
             trackColor={{ false: "#3F3F46", true: "#30D158" }}
           />
         </View>
+      </Card>
+
+      <Card className="mt-5 gap-3">
+        <Text className="text-lg font-bold text-white">Prohibited private use</Text>
+        <Text className="text-sm leading-5 text-charge-muted">
+          No paid services, coercion, minors, explicit public content, trafficking, harassment, or unsafe requests. Reported content is saved for moderation.
+        </Text>
       </Card>
 
       <Card className="mt-5 gap-4">

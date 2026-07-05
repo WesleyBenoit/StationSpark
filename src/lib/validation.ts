@@ -9,7 +9,8 @@ import {
   visibilityModes
 } from "@/constants/options";
 
-const explicitPublicContentPattern = /\b(hookup|sex|nude|nsfw|fetish|escort|xxx)\b/i;
+const explicitPublicContentPattern = /\b(hookup|sex|nude|nsfw|fetish|escort|prostitution|trafficking|xxx)\b/i;
+const unsafePrivateInvitePattern = /\b(underage|minor|forced?|coerc(?:e|ion)|rape|nudes?|escort|prostitution|trafficking|paid service|cash app)\b/i;
 const allPresenceStatuses = [...presenceStatuses, adultPresenceStatus] as const;
 const allInviteTypes = [...inviteTypes, adultInviteType] as const;
 
@@ -17,13 +18,17 @@ export function hasExplicitPublicContent(value?: string | null) {
   return Boolean(value && explicitPublicContentPattern.test(value));
 }
 
-const publicText = z
-  .string()
-  .trim()
-  .max(240)
-  .refine((value) => !hasExplicitPublicContent(value), {
+function publicTextSchema(options: { min?: number; max?: number } = {}) {
+  const { min = 0, max = 240 } = options;
+  let schema = z.string().trim().max(max);
+  if (min > 0) {
+    schema = schema.min(min);
+  }
+
+  return schema.refine((value) => !hasExplicitPublicContent(value), {
     message: "Public profile fields cannot include explicit adult content."
   });
+}
 
 export const signInSchema = z.object({
   email: z.string().trim().email(),
@@ -40,8 +45,8 @@ export const signUpSchema = signInSchema.extend({
 });
 
 export const onboardingSchema = z.object({
-  display_name: publicText.min(1).max(48),
-  bio: publicText.max(180).optional(),
+  display_name: publicTextSchema({ min: 1, max: 48 }),
+  bio: publicTextSchema({ max: 180 }).optional(),
   profile_photo_url: z.string().url().optional().or(z.literal("")),
   vehicle_make: z.string().trim().min(1).max(32),
   vehicle_model: z.string().trim().min(1).max(48),
@@ -56,7 +61,7 @@ export const onboardingSchema = z.object({
     context.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["adult_mode_consent"],
-      message: "Adult Mode requires separate opt-in consent."
+      message: "Private Intent (18+) requires separate opt-in consent."
     });
   }
 });
@@ -79,6 +84,24 @@ export const inviteSchema = z.object({
   station_id: z.string().uuid(),
   invite_type: z.enum(allInviteTypes),
   message: z.string().trim().max(180).optional()
+}).superRefine((value, context) => {
+  if (value.invite_type !== adultInviteType) return;
+
+  if (!value.message || value.message.length < 12) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["message"],
+      message: "Private Intent invites require a short message before acceptance."
+    });
+  }
+
+  if (value.message && unsafePrivateInvitePattern.test(value.message)) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["message"],
+      message: "Private Intent invite blocked by safety policy."
+    });
+  }
 });
 
 export const messageSchema = z.object({
