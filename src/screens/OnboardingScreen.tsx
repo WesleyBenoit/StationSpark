@@ -43,7 +43,7 @@ export function OnboardingScreen() {
   const visibilityMode = watch("visibility_mode");
   const defaultStatus = watch("default_status");
 
-  const toggleInterest = (interest: string) => {
+  const toggleInterest = (interest: (typeof interestOptions)[number]) => {
     if (interest === "Adult connections" && !adultModeEnabled) return;
     const next = interests.includes(interest)
       ? interests.filter((item) => item !== interest)

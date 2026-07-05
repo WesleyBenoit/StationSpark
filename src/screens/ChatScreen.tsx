@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useMemo, useState } from "react";
-import { Alert, FlatList, Text, TextInput, View } from "react-native";
+import { Alert, FlatList, TextInput, View } from "react-native";
 
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/Button";

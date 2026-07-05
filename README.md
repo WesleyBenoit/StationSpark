@@ -78,8 +78,16 @@ npm run start
 
 ```bash
 npm run typecheck
+npm run lint
 npm run test
 ```
+
+## Continuous Integration
+
+`.github/workflows/ci.yml` runs typecheck, lint, and tests on every push and pull
+request to `main`. Dependabot (`.github/dependabot.yml`) opens weekly update PRs for
+npm and GitHub Actions dependencies. See `SECURITY.md` for the vulnerability
+disclosure process.
 
 ## Supabase Notes
 
