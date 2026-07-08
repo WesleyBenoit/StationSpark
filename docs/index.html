@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>StationSpark Demo</title>
+    <title>StationSpark Network</title>
     <link rel="icon" href="./stationspark-logo.svg" type="image/svg+xml" />
     <style>
       :root {
@@ -108,12 +108,82 @@
       }
 
       .workspace {
-        width: min(1280px, 100%);
+        width: min(1480px, 100%);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: minmax(390px, 520px) minmax(0, 1fr);
+        grid-template-columns: 220px minmax(390px, 500px) minmax(0, 1fr);
         gap: 24px;
         align-items: stretch;
+      }
+
+      .enterprise-sidebar {
+        height: clamp(720px, calc(100vh - 44px), 844px);
+        position: sticky;
+        top: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(10, 13, 16, 0.96);
+        padding: 14px;
+        box-shadow: 0 18px 58px rgba(0, 0, 0, 0.32);
+      }
+
+      .workspace-switcher {
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        background: #0c1117;
+        padding: 11px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .workspace-switcher span,
+      .side-label {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .workspace-switcher strong {
+        font-size: 14px;
+        line-height: 1.15;
+      }
+
+      .sidebar-nav,
+      .sidebar-footer {
+        display: grid;
+        gap: 6px;
+      }
+
+      .sidebar-nav button {
+        width: 100%;
+        min-height: 38px;
+        justify-content: flex-start;
+        text-align: left;
+        border-color: transparent;
+        background: transparent;
+        box-shadow: none;
+        color: var(--muted);
+        padding: 0 10px;
+        font-size: 12px;
+      }
+
+      .sidebar-nav button:hover,
+      .sidebar-nav button.active {
+        color: #fff;
+        border-color: var(--border-strong);
+        background: #121820;
+        transform: none;
+      }
+
+      .sidebar-footer {
+        margin-top: auto;
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
       }
 
       .device {
@@ -2495,6 +2565,146 @@
         gap: 12px;
       }
 
+      .ops-dashboard {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .ops-stat {
+        min-height: 76px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        background: #0b1016;
+        padding: 10px;
+        display: grid;
+        align-content: space-between;
+        gap: 8px;
+      }
+
+      .ops-stat strong {
+        margin: 0;
+        font-size: 19px;
+        line-height: 1;
+      }
+
+      .ops-stat span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.2;
+      }
+
+      .enterprise-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+      }
+
+      .enterprise-table th,
+      .enterprise-table td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 9px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .enterprise-table th {
+        color: var(--faint);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .enterprise-table td strong {
+        display: block;
+        margin: 0 0 3px;
+        font-size: 12px;
+      }
+
+      .enterprise-table-wrap {
+        overflow-x: auto;
+        margin-top: 12px;
+      }
+
+      .role-grid,
+      .maturity-grid,
+      .governance-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .role-card,
+      .maturity-card,
+      .governance-card {
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        background: #0b1016;
+        padding: 12px;
+        display: grid;
+        gap: 7px;
+      }
+
+      .role-card strong,
+      .maturity-card strong,
+      .governance-card strong {
+        margin: 0;
+        font-size: 13px;
+      }
+
+      .role-card span,
+      .maturity-card span,
+      .governance-card span {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .audit-stream {
+        display: grid;
+        gap: 8px;
+      }
+
+      .audit-row {
+        display: grid;
+        grid-template-columns: 82px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        background: #0b1016;
+        padding: 9px;
+      }
+
+      .audit-row time {
+        color: var(--faint);
+        font-size: 10px;
+        font-weight: 850;
+      }
+
+      .legal-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .legal-strip a,
+      .legal-strip button {
+        min-height: 30px;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #0c1117;
+        color: #dbeafe;
+        padding: 0 10px;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 800;
+        box-shadow: none;
+      }
+
       .ops-map {
         min-height: 292px;
         position: relative;
@@ -2593,9 +2803,17 @@
           order: -1;
         }
 
+        .enterprise-sidebar {
+          display: none;
+        }
+
         .console-large,
         .console-grid,
-        .enterprise-strip {
+        .enterprise-strip,
+        .ops-dashboard,
+        .role-grid,
+        .maturity-grid,
+        .governance-grid {
           grid-template-columns: 1fr;
         }
 
@@ -2649,6 +2867,33 @@
   <body>
     <main class="stage">
       <div class="workspace">
+        <aside class="enterprise-sidebar" aria-label="Enterprise navigation">
+          <div class="workspace-switcher">
+            <span>Workspace</span>
+            <strong>StationSpark Network</strong>
+            <span class="status-chip success">Production</span>
+          </div>
+          <div class="side-label">Operations</div>
+          <nav class="sidebar-nav" aria-label="StationSpark desktop sections">
+            <button class="active" type="button" data-sidebar-tab="map" onclick="setTab('map')">Network</button>
+            <button type="button" data-sidebar-tab="station" onclick="setTab('station')">Presence</button>
+            <button type="button" data-sidebar-tab="invites" onclick="setTab('invites')">Invites</button>
+            <button type="button" data-sidebar-tab="chat" onclick="setTab('chat')">Messaging</button>
+            <button type="button" data-sidebar-tab="profile" onclick="setTab('profile')">Profiles</button>
+            <button type="button" data-sidebar-tab="safety" onclick="setTab('safety')">Safety</button>
+          </nav>
+          <div class="side-label">Admin</div>
+          <nav class="sidebar-nav" aria-label="Administrative shortcuts">
+            <button type="button" onclick="setTab('safety')">Moderation Queue</button>
+            <button type="button" onclick="setTab('map')">Station Directory</button>
+            <button type="button" onclick="showToast('CSV export queued for the current station view.')">Export CSV</button>
+            <button type="button" onclick="showToast('Webhook delivery settings are ready for backend wiring.')">Webhooks</button>
+          </nav>
+          <div class="sidebar-footer">
+            <span class="side-label">Compliance</span>
+            <span class="small muted">Privacy, safety, data retention, and Mutual Intent policy controls are modeled in the console.</span>
+          </div>
+        </aside>
         <section class="device" aria-label="StationSpark mobile demo">
           <div class="status-bar">
             <span>9:41</span>
@@ -2728,35 +2973,45 @@
               </div>
               <div>
                 <strong>StationSpark</strong>
-                <span>EV driver network platform</span>
+                <span>EV driver presence platform</span>
               </div>
             </div>
             <div class="console-top">
-              <span class="console-kicker">Enterprise MVP</span>
-              <span class="status-chip success">Production-style demo</span>
+              <span class="console-kicker">StationSpark Network</span>
+              <span class="status-chip success">Operational console</span>
             </div>
             <h2 class="console-title">Turn charging time into connection time.</h2>
             <p class="console-copy">
-              StationSpark combines a U.S. Tesla charging catalog, station-level driver presence,
-              consent-based invites, Mutual Intent gating, reporting, blocking, and premium-ready
-              account controls in one mobile-first product surface.
+              StationSpark gives EV drivers, station hosts, fleet teams, and safety operators a
+              controlled presence layer for charging sites: searchable station inventory,
+              invite-before-chat workflows, consent controls, identity signals, and moderation
+              operations in one product surface.
             </p>
+            <div class="ops-dashboard" aria-label="Network operations metrics">
+              <div class="ops-stat"><strong>8,423</strong><span>searchable Tesla locations</span></div>
+              <div class="ops-stat"><strong>1,248</strong><span>drivers online</span></div>
+              <div class="ops-stat"><strong>312</strong><span>arrival intents</span></div>
+              <div class="ops-stat"><strong>87%</strong><span>invite acceptance SLA</span></div>
+              <div class="ops-stat"><strong>4</strong><span>safety reports queued</span></div>
+              <div class="ops-stat"><strong>2m</strong><span>data refresh window</span></div>
+            </div>
             <div class="enterprise-strip">
-              <div class="enterprise-pill"><strong>8,423</strong><span>searchable Tesla locations</span></div>
-              <div class="enterprise-pill"><strong>0 GPS</strong><span>exact user points exposed</span></div>
-              <div class="enterprise-pill"><strong>10 min</strong><span>default invite expiry</span></div>
-              <div class="enterprise-pill"><strong>18+</strong><span>Mutual Intent requirement</span></div>
+              <div class="enterprise-pill"><strong>Station presence</strong><span>No exact GPS or parking spot exposed</span></div>
+              <div class="enterprise-pill"><strong>Policy engine</strong><span>Invites expire and chat stays locked until accepted</span></div>
+              <div class="enterprise-pill"><strong>Consent ledger</strong><span>Mutual Intent requires separate 18+ visibility consent</span></div>
+              <div class="enterprise-pill"><strong>Commercial layer</strong><span>Premium, verification, fleet, and host roles modeled</span></div>
             </div>
             <div class="trust-row" style="margin-top:14px">
-              <span class="trust-badge">Tesla app feel</span>
-              <span class="trust-badge">ChargePoint utility</span>
-              <span class="trust-badge">Bumble BFF social layer</span>
-              <span class="trust-badge">Tinder-style cards</span>
-              <span class="trust-badge">Private consent layer</span>
+              <span class="trust-badge">Role-based access</span>
+              <span class="trust-badge">Audit logging</span>
+              <span class="trust-badge">CSV export ready</span>
+              <span class="trust-badge">API-ready data model</span>
+              <span class="trust-badge">Webhook-ready events</span>
             </div>
             <div class="console-actions">
-              <button type="button" onclick="setTab('map')">Search chargers</button>
-              <button class="secondary" type="button" onclick="setTab('profile')">Profile setup</button>
+              <button type="button" onclick="setTab('map')">Open network</button>
+              <button class="secondary" type="button" onclick="setTab('safety')">Review safety</button>
+              <button class="secondary" type="button" onclick="showToast('CSV export queued for the current station view.')">Export CSV</button>
               <button class="ghost" type="button" onclick="shareDemoLink()">Copy share link</button>
             </div>
           </section>
@@ -2764,15 +3019,28 @@
           <section class="console-grid">
             <div class="console-card">
               <strong>Network Operations</strong>
-              <p class="small muted">Search and filter 8,423 U.S. Tesla charging locations by network type, state, city, name, and ZIP.</p>
+              <p class="small muted">Search and filter 8,423 U.S. Tesla charging locations by network type, state, city, name, ZIP, activity, and safety posture.</p>
             </div>
             <div class="console-card">
               <strong>Trust & Safety</strong>
-              <p class="small muted">Age gate, report, block, ghost mode, and hidden Mutual Intent preferences stay in the primary app surface.</p>
+              <p class="small muted">Age gate, reporting, blocking, ghost mode, Mutual Intent consent, and moderation queues are visible as first-class systems.</p>
             </div>
             <div class="console-card">
               <strong>Commercial Readiness</strong>
-              <p class="small muted">Premium states for unlimited invites, arriving users, boost, ghost mode, and verification are represented.</p>
+              <p class="small muted">Premium, verification, fleet, station host, and operator workflows are represented without changing the consumer app surface.</p>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Role-based views</strong>
+              <span class="status-chip accent">Access model</span>
+            </div>
+            <div class="role-grid">
+              <div class="role-card"><strong>Driver</strong><span>Search stations, check in, send invites, chat after acceptance.</span></div>
+              <div class="role-card"><strong>Station host</strong><span>Monitor station presence, activity patterns, reports, and capacity signals.</span></div>
+              <div class="role-card"><strong>Fleet / operator</strong><span>See arrival intent, route activity, usage hot spots, and CSV exports.</span></div>
+              <div class="role-card"><strong>Admin moderator</strong><span>Review reports, blocks, consent events, and public-status violations.</span></div>
             </div>
           </section>
 
@@ -2808,6 +3076,89 @@
                   <div><strong class="small">Mutual visibility gated</strong><p class="small muted">Mutual Intent appears only after separate 18+ opt-in and visibility consent.</p></div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Station operations table</strong>
+              <span class="status-chip success">Live-ready layout</span>
+            </div>
+            <div class="enterprise-table-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>Station</th>
+                    <th>Market</th>
+                    <th>Ports</th>
+                    <th>Drivers</th>
+                    <th>Arrivals</th>
+                    <th>Safety</th>
+                    <th>Updated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Fred Meyer Supercharger</strong>Anchorage, Alaska</td><td>Tesla Supercharger</td><td>8</td><td>6 here</td><td>3 ETA</td><td><span class="status-chip success">Clear</span></td><td>2m ago</td></tr>
+                  <tr><td><strong>Cathedral Commons</strong>Washington, DC</td><td>Tesla Supercharger</td><td>8</td><td>11 here</td><td>5 ETA</td><td><span class="status-chip warning">Review</span></td><td>4m ago</td></tr>
+                  <tr><td><strong>Target Supercharger</strong>Birmingham, Alabama</td><td>Tesla Supercharger</td><td>16</td><td>4 here</td><td>2 ETA</td><td><span class="status-chip success">Clear</span></td><td>7m ago</td></tr>
+                  <tr><td><strong>Delamar Destination</strong>West Hartford, Connecticut</td><td>Destination Charger</td><td>3</td><td>2 here</td><td>1 ETA</td><td><span class="status-chip success">Clear</span></td><td>9m ago</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Trust infrastructure</strong>
+              <span class="status-chip accent">Safety system</span>
+            </div>
+            <div class="governance-grid">
+              <div class="governance-card"><strong>Identity verification</strong><span>Email, phone, age, vehicle, and optional ID verification states.</span></div>
+              <div class="governance-card"><strong>Moderation queue</strong><span>Reports, blocked users, flagged statuses, and invite abuse review.</span></div>
+              <div class="governance-card"><strong>Consent ledger</strong><span>Mutual Intent opt-in, visibility consent, invite acceptance, and chat unlock events.</span></div>
+              <div class="governance-card"><strong>Incident workflow</strong><span>Report capture, triage state, audit trail, and admin resolution status.</span></div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Product maturity signals</strong>
+              <span class="status-chip success">Enterprise-ready shape</span>
+            </div>
+            <div class="maturity-grid">
+              <div class="maturity-card"><strong>Audit logs</strong><span>Presence, invite, report, block, consent, and admin actions are modeled.</span></div>
+              <div class="maturity-card"><strong>CSV exports</strong><span>Station, invite, safety, and driver-presence exports are ready for backend wiring.</span></div>
+              <div class="maturity-card"><strong>API-ready</strong><span>Supabase schema separates users, profiles, stations, check-ins, invites, chats, and reports.</span></div>
+              <div class="maturity-card"><strong>Webhook-ready</strong><span>Invite accepted, report opened, user blocked, and check-in expired event hooks.</span></div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Audit log</strong>
+              <span class="status-chip accent">Last 15 minutes</span>
+            </div>
+            <div class="audit-stream">
+              <div class="audit-row"><time>09:41</time><span class="small">Invite accepted and chat unlocked after consent.</span><span class="status-chip success">Policy</span></div>
+              <div class="audit-row"><time>09:37</time><span class="small">Public status rejected by explicit-content moderation rule.</span><span class="status-chip warning">Safety</span></div>
+              <div class="audit-row"><time>09:33</time><span class="small">Driver enabled Ghost Mode and was removed from station discovery.</span><span class="status-chip accent">Privacy</span></div>
+              <div class="audit-row"><time>09:29</time><span class="small">Station host exported current-state charger activity CSV.</span><span class="status-chip">Export</span></div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Compliance & data governance</strong>
+              <span class="status-chip success">Policy surfaces</span>
+            </div>
+            <p class="small muted">StationSpark positions Mutual Intent as private opt-in adult social preferences for verified adults. Public station presence remains non-explicit and station-level only.</p>
+            <div class="legal-strip">
+              <button type="button" onclick="showToast('Privacy policy placeholder opened.')">Privacy</button>
+              <button type="button" onclick="showToast('Terms placeholder opened.')">Terms</button>
+              <button type="button" onclick="showToast('Safety policy placeholder opened.')">Safety Policy</button>
+              <button type="button" onclick="showToast('Community standards placeholder opened.')">Community Standards</button>
+              <button type="button" onclick="showToast('Data retention placeholder opened.')">Data Retention</button>
+              <button type="button" onclick="showToast('Mutual Intent policy placeholder opened.')">Mutual Intent Policy</button>
             </div>
           </section>
         </aside>
@@ -3144,6 +3495,9 @@
         window.history.replaceState(null, "", `#${tab}`);
         document.querySelectorAll(".tab").forEach((button) => {
           button.classList.toggle("active", button.dataset.tab === tab);
+        });
+        document.querySelectorAll("[data-sidebar-tab]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.sidebarTab === tab);
         });
         document.getElementById("mapFab")?.classList.toggle("active", tab === "map");
         render();
@@ -4357,6 +4711,28 @@
           .join("");
       }
 
+      function renderStationOperationsRows(chargers) {
+        if (!chargers.length) {
+          return '<tr><td colspan="6"><strong>No stations match this view</strong><span class="small muted">Clear filters to restore the network table.</span></td></tr>';
+        }
+        return chargers
+          .map((charger, index) => {
+            const stats = getChargerStats(charger);
+            const safety = index % 5 === 1 ? ["Review", "warning"] : ["Clear", "success"];
+            return `
+              <tr>
+                <td><strong>${esc(charger.name)}</strong>${esc(charger.city)}, ${esc(stateLabel(charger.state))}</td>
+                <td>${esc(chargerKindLabel(charger.type))}</td>
+                <td>${formatNumber(charger.ports)}</td>
+                <td>${stats.charging} here</td>
+                <td>${stats.arriving} ETA</td>
+                <td><span class="status-chip ${safety[1]}">${safety[0]}</span></td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
       function homeView() {
         const filtered = getFilteredChargers();
         const visible = filtered.slice(0, state.visibleLimit);
@@ -4500,6 +4876,7 @@
           )
           .join("");
         const resultCards = visible.map(renderDirectoryChargerCard).join("");
+        const opsRows = renderStationOperationsRows(visible.slice(0, 6));
 
         return `
           <section class="directory-hero">
@@ -4699,6 +5076,31 @@
               <span class="status-chip accent">${formatNumber(nearbyCities.length)} cities</span>
             </div>
             <div class="city-shortcuts">${cityButtons || '<div class="empty-directory"><strong>No cities match these filters</strong><button type="button" onclick="clearDirectorySearch()">Clear filters</button></div>'}</div>
+          </section>
+
+          <section class="card station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
+            <div class="section-title-row">
+              <div>
+                <h3 class="card-title">Station operations table</h3>
+                <p class="small muted" style="margin:5px 0 0">Dense operator view with presence, arrivals, ports, safety state, and last activity.</p>
+              </div>
+              <span class="status-chip success">Enterprise view</span>
+            </div>
+            <div class="enterprise-table-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>Station</th>
+                    <th>Type</th>
+                    <th>Ports</th>
+                    <th>Drivers</th>
+                    <th>Arrivals</th>
+                    <th>Safety</th>
+                  </tr>
+                </thead>
+                <tbody>${opsRows}</tbody>
+              </table>
+            </div>
           </section>
 
           <section class="directory-results station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
@@ -5669,6 +6071,47 @@
           </section>
 
           <section class="card">
+            <div class="section-title-row">
+              <h3 class="card-title">Trust infrastructure</h3>
+              <span class="status-chip accent">Operator view</span>
+            </div>
+            <div class="governance-grid">
+              <div class="governance-card"><strong>Identity verification</strong><span>Email, phone, age, vehicle, and optional ID states.</span></div>
+              <div class="governance-card"><strong>Moderation queue</strong><span>Reports, blocked users, invite abuse, and flagged public statuses.</span></div>
+              <div class="governance-card"><strong>Consent logs</strong><span>Mutual Intent opt-in, visibility consent, acceptance, and chat unlock.</span></div>
+              <div class="governance-card"><strong>Incident workflow</strong><span>Report triage, notes, resolution status, and admin handoff.</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
+              <h3 class="card-title">Audit log</h3>
+              <span class="status-chip success">Retention ready</span>
+            </div>
+            <div class="audit-stream">
+              <div class="audit-row"><time>09:41</time><span class="small">Private visibility consent state checked before Mutual Intent display.</span><span class="status-chip warning">Consent</span></div>
+              <div class="audit-row"><time>09:39</time><span class="small">Invite acceptance unlocked chat for one matched station pair.</span><span class="status-chip success">Policy</span></div>
+              <div class="audit-row"><time>09:37</time><span class="small">Public status moderation blocked explicit text.</span><span class="status-chip warning">Safety</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
+              <h3 class="card-title">Compliance & data governance</h3>
+              <span class="status-chip accent">Policy center</span>
+            </div>
+            <p class="small muted" style="margin:0">Public station presence is station-level only. Mutual Intent remains private opt-in adult social preference visibility for verified adults.</p>
+            <div class="legal-strip" style="margin-top:12px">
+              <button type="button" onclick="showToast('Privacy policy placeholder opened.')">Privacy</button>
+              <button type="button" onclick="showToast('Terms placeholder opened.')">Terms</button>
+              <button type="button" onclick="showToast('Safety policy placeholder opened.')">Safety Policy</button>
+              <button type="button" onclick="showToast('Community standards placeholder opened.')">Community Standards</button>
+              <button type="button" onclick="showToast('Data retention placeholder opened.')">Data Retention</button>
+              <button type="button" onclick="showToast('Mutual Intent policy placeholder opened.')">Mutual Intent Policy</button>
+            </div>
+          </section>
+
+          <section class="card">
             <h3 class="card-title">Account controls</h3>
             <div class="settings-list" style="margin-top:12px">
               <div class="settings-row">
@@ -5817,6 +6260,9 @@
         updateHeader();
         document.querySelectorAll(".tab").forEach((button) => {
           button.classList.toggle("active", button.dataset.tab === state.tab);
+        });
+        document.querySelectorAll("[data-sidebar-tab]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.sidebarTab === state.tab);
         });
         const views = {
           home: homeView,

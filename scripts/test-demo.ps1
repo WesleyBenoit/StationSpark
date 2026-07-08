@@ -142,6 +142,9 @@ try {
   assert('catalog includes Destination Chargers', window.STATIONSPARK_TESLA_CHARGER_META.destinationCount === 5322, window.STATIONSPARK_TESLA_CHARGER_META.destinationCount);
   assert('station finder is the default screen', state.tab === 'map' && document.getElementById('screenTitle').textContent === 'Station Finder', state.tab);
   assert('new tagline appears on station finder', text().includes('Turn charging time into connection time.') || text().includes('Find stations and drivers fast'), 'tagline');
+  assert('enterprise console replaces MVP demo language', text().includes('StationSpark Network') && text().includes('Operational console') && !text().includes('Enterprise MVP') && !text().includes('Production-style demo'), 'enterprise console');
+  assert('enterprise console shows operations metrics and roles', text().includes('drivers online') && text().includes('arrival intents') && text().includes('Role-based views') && text().includes('Fleet / operator'), 'ops roles');
+  assert('enterprise console shows maturity and governance', text().includes('Trust infrastructure') && text().includes('Compliance & data governance') && text().includes('API-ready') && text().includes('Webhook-ready'), 'governance maturity');
   assert('bottom nav uses Stations label', !!buttonByText('Stations'), 'stations nav');
   assert('station finder has no globe canvas', !document.getElementById('chargerCanvas'), 'no canvas');
   assert('station finder exposes near me flow', !!buttonByText('Find stations near me') && text().includes('Near Me demo'), 'near me');
@@ -164,6 +167,7 @@ try {
       getComputedStyle(document.querySelector('.route-panel')).display === 'none',
     `${state.visibleLimit}/${document.querySelectorAll('.directory-result').length}`
   );
+  assert('station finder has enterprise operations table', text().includes('Station operations table') && text().includes('Enterprise view') && document.querySelectorAll('.enterprise-table tbody tr').length > 0, 'ops table');
   assert(
     'app shell uses contained scrolling',
     document.querySelector('.device').getBoundingClientRect().height <= 850 &&
@@ -398,6 +402,7 @@ try {
   await wait(80);
   assert('safety center shows moderation state rows', text().includes('Invite state') && text().includes('Chat state') && text().includes('Reports'), 'moderation rows');
   assert('safety shows private consent layer checkpoints', text().includes('Private consent layer') && text().includes('Visibility consent') && text().includes('Mutual recipient'), 'consent layer');
+  assert('safety center exposes enterprise trust infrastructure', text().includes('Trust infrastructure') && text().includes('Incident workflow') && text().includes('Audit log') && text().includes('Data Retention'), 'trust infrastructure');
   assert('safety has hide shortcuts and admin dashboard', text().includes('Hide me for 30 minutes') && text().includes('Admin moderation dashboard') && text().includes('Invite abuse'), 'admin/hide');
   const statusInput = document.getElementById('statusInput');
   statusInput.value = 'explicit meetup';
