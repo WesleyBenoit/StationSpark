@@ -1,12 +1,25 @@
 node_modules
 .expo
+.agents
+.codex
 dist
 web-build
+.next
+build
+out
 .env
 .env.local
+.env.*
+!.env.example
 .DS_Store
 coverage
 *.log
+*.pem
+*.key
+*.p12
+*.pfx
+uploads/
+private/
 stationspark-tunnel.*
 
 .vercel
