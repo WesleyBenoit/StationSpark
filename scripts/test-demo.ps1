@@ -145,9 +145,10 @@ try {
   assert('enterprise console replaces MVP demo language', text().includes('StationSpark Network') && text().includes('Operational console') && !text().includes('Enterprise MVP') && !text().includes('Production-style demo'), 'enterprise console');
   assert('enterprise console shows operations metrics and roles', text().includes('drivers online') && text().includes('arrival intents') && text().includes('Role-based views') && text().includes('Fleet / operator'), 'ops roles');
   assert('enterprise console shows maturity and governance', text().includes('Trust infrastructure') && text().includes('Compliance & data governance') && text().includes('API-ready') && text().includes('Webhook-ready'), 'governance maturity');
+  assert('enterprise console shows security and integration posture', text().includes('SAML / OIDC SSO') && text().includes('RBAC policies') && text().includes('Integration health') && text().includes('target uptime SLA'), 'security posture');
   assert('bottom nav uses Stations label', !!buttonByText('Stations'), 'stations nav');
   assert('station finder has no globe canvas', !document.getElementById('chargerCanvas'), 'no canvas');
-  assert('station finder exposes near me flow', !!buttonByText('Find stations near me') && text().includes('Near Me demo'), 'near me');
+  assert('station finder exposes near me flow', !!buttonByText('Find stations near me') && text().includes('Near Me'), 'near me');
   buttonByText('Find stations near me').click();
   await wait(120);
   assert('near me opens privacy permission flow', state.locationPromptOpen && text().includes('Location privacy') && text().includes('Use manual city'), state.locationPromptOpen);
@@ -191,8 +192,8 @@ try {
     `${document.querySelectorAll('.coverage-card').length}/${document.querySelectorAll('.city-result-button').length}/${document.querySelectorAll('.state-heat-tile').length}`
   );
   assert('station finder has fast filters and saved stations', text().includes('Open Now') && text().includes('Drivers Here') && text().includes('Saved stations') && text().includes('Recent stations'), 'filters/saved');
-  assert('station finder labels demo data clearly', text().includes('Demo station activity') && text().includes('Sample driver presence'), 'demo labels');
-  assert('station finder shows hybrid EV social model', text().includes('EV command center') && text().includes('Product model') && text().includes('Tesla-style EV command') && text().includes('Bumble BFF-style discovery'), 'hybrid model');
+  assert('station finder labels sample operations clearly', text().includes('Sample station activity') && text().includes('Sample driver presence'), 'sample labels');
+  assert('station finder shows enterprise EV social model', text().includes('EV command center') && text().includes('Product model') && text().includes('EV command workflow') && text().includes('Professional discovery layer'), 'enterprise model');
   assert('station finder includes first-run onboarding', text().includes('First-run setup') && text().includes('Confirm 18+'), 'onboarding');
   assert('station finder includes route mode', text().includes('Route mode') && !!buttonByText('Show route chargers'), 'route mode');
   buttonByText('Show route chargers').click();
@@ -340,7 +341,7 @@ try {
   buttonByText('Coffee nearby').click();
   await wait(120);
   assert('standard invite opens composer before sending', state.inviteDraft && state.tab === 'invites' && text().includes('Short invite message'), `${state.inviteDraft?.type}/${state.tab}`);
-  assert('sparks explains invites and free limit', text().includes('Sparks are invite requests') && text().includes('Free tier'), 'sparks education');
+  assert('invites explain consent requests and free limit', text().includes('Invites are consent requests') && text().includes('Free tier'), 'invite education');
   const standardInviteMessage = document.getElementById('standardInviteMessage');
   standardInviteMessage.value = 'Want to grab coffee nearby while we charge?';
   standardInviteMessage.dispatchEvent(new Event('input', { bubbles: true }));
@@ -403,6 +404,7 @@ try {
   assert('safety center shows moderation state rows', text().includes('Invite state') && text().includes('Chat state') && text().includes('Reports'), 'moderation rows');
   assert('safety shows private consent layer checkpoints', text().includes('Private consent layer') && text().includes('Visibility consent') && text().includes('Mutual recipient'), 'consent layer');
   assert('safety center exposes enterprise trust infrastructure', text().includes('Trust infrastructure') && text().includes('Incident workflow') && text().includes('Audit log') && text().includes('Data Retention'), 'trust infrastructure');
+  assert('safety center exposes organization and integration controls', text().includes('Organization settings') && text().includes('SCIM provisioning') && text().includes('RBAC roles') && text().includes('Integration health'), 'organization controls');
   assert('safety has hide shortcuts and admin dashboard', text().includes('Hide me for 30 minutes') && text().includes('Admin moderation dashboard') && text().includes('Invite abuse'), 'admin/hide');
   const statusInput = document.getElementById('statusInput');
   statusInput.value = 'explicit meetup';

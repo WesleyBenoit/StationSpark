@@ -2894,7 +2894,7 @@
             <span class="small muted">Privacy, safety, data retention, and Mutual Intent policy controls are modeled in the console.</span>
           </div>
         </aside>
-        <section class="device" aria-label="StationSpark mobile demo">
+        <section class="device" aria-label="StationSpark mobile product preview">
           <div class="status-bar">
             <span>9:41</span>
             <div class="status-icons" aria-hidden="true">
@@ -2946,7 +2946,7 @@
             <nav class="tabbar" aria-label="StationSpark sections">
               <button class="tab active" type="button" data-tab="map">Stations</button>
               <button class="tab" type="button" data-tab="station">Drivers</button>
-              <button class="tab" type="button" data-tab="invites">Sparks</button>
+              <button class="tab" type="button" data-tab="invites">Invites</button>
               <button class="tab" type="button" data-tab="chat">Chat</button>
               <button class="tab" type="button" data-tab="profile">Me</button>
               <button class="tab" type="button" data-tab="safety">Safe</button>
@@ -2994,6 +2994,10 @@
               <div class="ops-stat"><strong>87%</strong><span>invite acceptance SLA</span></div>
               <div class="ops-stat"><strong>4</strong><span>safety reports queued</span></div>
               <div class="ops-stat"><strong>2m</strong><span>data refresh window</span></div>
+              <div class="ops-stat"><strong>99.95%</strong><span>target uptime SLA</span></div>
+              <div class="ops-stat"><strong>RBAC</strong><span>role-based admin access</span></div>
+              <div class="ops-stat"><strong>SSO</strong><span>SAML/OIDC enterprise login</span></div>
+              <div class="ops-stat"><strong>30d</strong><span>audit retention placeholder</span></div>
             </div>
             <div class="enterprise-strip">
               <div class="enterprise-pill"><strong>Station presence</strong><span>No exact GPS or parking spot exposed</span></div>
@@ -3130,6 +3134,45 @@
               <div class="maturity-card"><strong>CSV exports</strong><span>Station, invite, safety, and driver-presence exports are ready for backend wiring.</span></div>
               <div class="maturity-card"><strong>API-ready</strong><span>Supabase schema separates users, profiles, stations, check-ins, invites, chats, and reports.</span></div>
               <div class="maturity-card"><strong>Webhook-ready</strong><span>Invite accepted, report opened, user blocked, and check-in expired event hooks.</span></div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Security & organization controls</strong>
+              <span class="status-chip success">B2B control plane</span>
+            </div>
+            <div class="maturity-grid">
+              <div class="maturity-card"><strong>SAML / OIDC SSO</strong><span>Enterprise login path for operators, station hosts, and moderators.</span></div>
+              <div class="maturity-card"><strong>RBAC policies</strong><span>Driver, station host, fleet operator, support, and admin roles.</span></div>
+              <div class="maturity-card"><strong>Audit retention</strong><span>Consent, moderation, export, and admin actions ready for retention policies.</span></div>
+              <div class="maturity-card"><strong>DPA posture</strong><span>Privacy, deletion, consent, and data minimization controls are surfaced.</span></div>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Integration health</strong>
+              <span class="status-chip accent">Runtime dependencies</span>
+            </div>
+            <div class="enterprise-table-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>System</th>
+                    <th>Status</th>
+                    <th>Owner</th>
+                    <th>Next action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Supabase Auth</strong>User sessions and RLS</td><td><span class="status-chip success">Ready</span></td><td>Platform</td><td>Connect production keys</td></tr>
+                  <tr><td><strong>Supabase Realtime</strong>Station presence events</td><td><span class="status-chip accent">Modeled</span></td><td>Platform</td><td>Enable channel policies</td></tr>
+                  <tr><td><strong>Stripe Billing</strong>Premium plans</td><td><span class="status-chip accent">Stubbed</span></td><td>Revenue</td><td>Add checkout sessions</td></tr>
+                  <tr><td><strong>Map Provider</strong>Station directory display</td><td><span class="status-chip success">Static fallback</span></td><td>Product</td><td>Add Mapbox key</td></tr>
+                  <tr><td><strong>Notifications</strong>Invite and arrival alerts</td><td><span class="status-chip warning">Phase 2</span></td><td>Growth</td><td>Configure Expo push</td></tr>
+                </tbody>
+              </table>
             </div>
           </section>
 
@@ -3290,7 +3333,7 @@
       };
 
       const titles = {
-        home: ["Guide", "Turn charging time into connection time."],
+        home: ["Overview", "Network command center"],
         map: ["Station Finder", "Search all U.S. Tesla charging locations"],
         station: ["Drivers", "People at this station"],
         invites: ["Invites", "Consent-based requests"],
@@ -3464,8 +3507,8 @@
         try {
           if (navigator.share) {
             await navigator.share({
-              title: "StationSpark demo",
-              text: "Try the StationSpark EV charging social discovery demo.",
+              title: "StationSpark Network",
+              text: "Review the StationSpark EV driver presence control plane.",
               url
             });
           } else if (navigator.clipboard) {
@@ -3848,7 +3891,7 @@
         const first = getFilteredChargers()[0] || chargerCatalog.find((charger) => charger.state === "AZ") || chargerCatalog[0];
         if (first) state.selectedChargerId = first.id;
         setTab("map");
-        showToast("Near Me demo focused on Scottsdale, Arizona.");
+        showToast("Near Me focused on Scottsdale, Arizona.");
       }
 
       function getStationsByIds(ids) {
@@ -4745,9 +4788,9 @@
             <div class="card-top">
               <div>
                 <h3 class="card-title">Turn charging time into connection time.</h3>
-                <p class="small muted" style="margin:5px 0 0">Pilot workflow: search the charging network, review station-level driver presence, send an invite, then unlock chat after acceptance.</p>
+                <p class="small muted" style="margin:5px 0 0">Operator workflow: search the charging network, review station-level driver presence, send an invite, then unlock chat after acceptance.</p>
               </div>
-              <span class="status-chip success">Pilot mode</span>
+              <span class="status-chip success">Control plane</span>
             </div>
             <div class="guide-step">
               <span class="guide-number">1</span>
@@ -4769,7 +4812,7 @@
               <button type="button" onclick="setTab('map')">Search chargers</button>
               <button class="secondary" type="button" onclick="setTab('profile')">Build profile</button>
               <button class="secondary" type="button" onclick="setTab('station')">View drivers</button>
-              <button class="ghost" type="button" onclick="shareDemoLink()">Share demo</button>
+              <button class="ghost" type="button" onclick="shareDemoLink()">Share console</button>
             </div>
           </section>
 
@@ -4789,7 +4832,7 @@
               <button class="ghost" type="button" onclick="useDemoCity('Austin')">Austin</button>
               <button class="ghost" type="button" onclick="useDemoCity('Chicago')">Chicago</button>
               <button class="ghost" type="button" onclick="useDemoCity('Los Angeles')">Los Angeles</button>
-              <button class="ghost" type="button" onclick="useDemoCity('Scottsdale')">Near Me Demo</button>
+              <button class="ghost" type="button" onclick="useDemoCity('Scottsdale')">Near Me</button>
             </div>
           </section>
 
@@ -4944,8 +4987,8 @@
           </section>
 
           <section class="demo-data-banner small station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
-            <strong>Demo station activity</strong>
-            <span>Station search uses a real U.S. Tesla charging catalog snapshot. Driver presence, station activity, route activity, and invites are sample demo data until Supabase realtime is connected.</span>
+            <strong>Sample station activity</strong>
+            <span>Station search uses a real U.S. Tesla charging catalog snapshot. Driver presence, station activity, route activity, and invites use sample operational data until Supabase realtime is connected.</span>
           </section>
 
           <section class="card small station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
@@ -4954,9 +4997,9 @@
               <span class="status-chip success">Hybrid UX</span>
             </div>
             <div class="trust-row" style="margin-top:10px">
-              <span class="trust-badge">Tesla-style EV command</span>
-              <span class="trust-badge">ChargePoint-style utility</span>
-              <span class="trust-badge">Bumble BFF-style discovery</span>
+              <span class="trust-badge">EV command workflow</span>
+              <span class="trust-badge">Station utility layer</span>
+              <span class="trust-badge">Professional discovery layer</span>
               <span class="trust-badge">Invite-before-chat safety</span>
             </div>
           </section>
@@ -4970,7 +5013,7 @@
               <span class="status-chip ${state.onboardingAgeConfirmed ? "success" : "warning"}">${state.onboardingAgeConfirmed ? "Ready" : "Setup"}</span>
             </div>
             <div class="onboarding-grid">
-              <button class="setup-check" type="button" onclick="state.onboardingAgeConfirmed=true; render(); showToast('18+ confirmed for demo onboarding.')"><strong>Confirm 18+</strong><span>${state.onboardingAgeConfirmed ? "Confirmed" : "Required before use"}</span></button>
+              <button class="setup-check" type="button" onclick="state.onboardingAgeConfirmed=true; render(); showToast('18+ confirmed for onboarding.')"><strong>Confirm 18+</strong><span>${state.onboardingAgeConfirmed ? "Confirmed" : "Required before use"}</span></button>
               <button class="setup-check" type="button" onclick="setTab('profile')"><strong>Create profile</strong><span>Name, photo, vehicle, interests</span></button>
               <button class="setup-check" type="button" onclick="setTab('profile')"><strong>Tesla / EV</strong><span>${esc(state.profile.teslaModel)}</span></button>
               <button class="setup-check" type="button" onclick="setTab('safety')"><strong>Safety defaults</strong><span>${state.onboardingSafetyDefaults ? "Ghost/report/block ready" : "Review safety"}</span></button>
@@ -4980,12 +5023,12 @@
           <section class="card near-me-panel station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
             <div class="card-top">
               <div>
-                <h3 class="card-title">${state.nearMeActive ? "Closest stations near you" : "Near Me demo"}</h3>
-                <p class="small muted" style="margin:5px 0 0">${state.nearMeActive ? "Using Scottsdale, Arizona as a safe demo location. Real GPS would stay private and only resolve station-level presence." : "Preview the near-me flow without exposing exact GPS coordinates."}</p>
+                <h3 class="card-title">${state.nearMeActive ? "Closest stations near you" : "Near Me"}</h3>
+                <p class="small muted" style="margin:5px 0 0">${state.nearMeActive ? "Using Scottsdale, Arizona as a safe sample location. Real GPS would stay private and only resolve station-level presence." : "Preview the near-me flow without exposing exact GPS coordinates."}</p>
               </div>
               <span class="status-chip success">${state.nearMeActive ? "Active" : "Demo"}</span>
             </div>
-            <div class="near-me-list">${renderMiniStationRows(nearMeStations, "No nearby demo stations found.", true)}</div>
+            <div class="near-me-list">${renderMiniStationRows(nearMeStations, "No nearby sample stations found.", true)}</div>
           </section>
 
           <section class="card route-panel station-panel-conditional ${state.stationPanel === "route" ? "active" : ""}">
@@ -5482,8 +5525,8 @@
           <section class="card">
             <div class="card-top">
               <div>
-                <h3 class="card-title">Sparks are invite requests</h3>
-                <p class="small muted" style="margin:5px 0 0">Send a Spark first. Chat unlocks only after the recipient accepts.</p>
+                <h3 class="card-title">Invites are consent requests</h3>
+                <p class="small muted" style="margin:5px 0 0">Send an invite first. Chat unlocks only after the recipient accepts.</p>
               </div>
               <span class="status-chip ${state.premium ? "success" : "accent"}">${state.premium ? "Premium" : `${remaining} left`}</span>
             </div>
@@ -5829,17 +5872,17 @@
 
             <div class="actions">
               <button type="button" onclick="saveProfile()">Save profile</button>
-              <button class="secondary" type="button" onclick="window.localStorage.removeItem('stationspark.profile'); state.profile={...defaultProfile}; render(); showToast('Profile reset to demo defaults.')">Reset demo</button>
+              <button class="secondary" type="button" onclick="window.localStorage.removeItem('stationspark.profile'); state.profile={...defaultProfile}; render(); showToast('Profile reset to defaults.')">Reset profile</button>
             </div>
           </section>
 
           <section class="card">
             <div class="section-title-row">
               <h3 class="card-title">Verification badges</h3>
-              <span class="status-chip accent">MVP ready</span>
+              <span class="status-chip accent">Configured</span>
             </div>
             <div class="verification-grid">
-              <div class="verification-badge"><strong>Email verified</strong><span>Active demo account</span></div>
+              <div class="verification-badge"><strong>Email verified</strong><span>Active account</span></div>
               <div class="verification-badge"><strong>Age confirmed</strong><span>Required before use</span></div>
               <div class="verification-badge"><strong>Tesla owner</strong><span>Phase 2 verification</span></div>
               <div class="verification-badge"><strong>Premium badge</strong><span>${state.premium ? "Enabled" : "Preview"}</span></div>
@@ -5852,7 +5895,7 @@
               <span class="status-chip accent">Trust setup</span>
             </div>
             <div class="settings-list" style="margin-top:12px">
-              <div class="settings-row"><span class="station-index">E</span><div><strong class="small">Email verified</strong><p class="small muted" style="margin:3px 0 0">Active demo account.</p></div><span class="status-chip success">Done</span></div>
+              <div class="settings-row"><span class="station-index">E</span><div><strong class="small">Email verified</strong><p class="small muted" style="margin:3px 0 0">Active account.</p></div><span class="status-chip success">Done</span></div>
               <div class="settings-row"><span class="station-index">P</span><div><strong class="small">Phone optional</strong><p class="small muted" style="margin:3px 0 0">Placeholder for SMS verification.</p></div><span class="status-chip">Optional</span></div>
               <div class="settings-row"><span class="station-index">T</span><div><strong class="small">Tesla owner</strong><p class="small muted" style="margin:3px 0 0">Placeholder for vehicle verification.</p></div><span class="status-chip accent">Phase 2</span></div>
               <div class="settings-row"><span class="station-index">ID</span><div><strong class="small">ID verification</strong><p class="small muted" style="margin:3px 0 0">Placeholder for higher-trust profiles.</p></div><span class="status-chip">Optional</span></div>
@@ -6085,6 +6128,32 @@
 
           <section class="card">
             <div class="section-title-row">
+              <h3 class="card-title">Organization settings</h3>
+              <span class="status-chip success">Enterprise controls</span>
+            </div>
+            <div class="governance-grid">
+              <div class="governance-card"><strong>SAML / OIDC SSO</strong><span>Operator login path for station hosts, fleets, and moderators.</span></div>
+              <div class="governance-card"><strong>SCIM provisioning</strong><span>Placeholder for team lifecycle and account deactivation.</span></div>
+              <div class="governance-card"><strong>RBAC roles</strong><span>Driver, station host, fleet, support, moderator, and owner permissions.</span></div>
+              <div class="governance-card"><strong>Uptime SLA</strong><span>99.95% target service posture with incident status placeholders.</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
+              <h3 class="card-title">Integration health</h3>
+              <span class="status-chip accent">Backend readiness</span>
+            </div>
+            <div class="settings-list" style="margin-top:12px">
+              <div class="settings-row"><span class="station-index">A</span><div><strong class="small">Supabase Auth</strong><p class="small muted" style="margin:3px 0 0">Email, OAuth, phone placeholders, and RLS-ready user roles.</p></div><span class="status-chip success">Ready</span></div>
+              <div class="settings-row"><span class="station-index">R</span><div><strong class="small">Realtime presence</strong><p class="small muted" style="margin:3px 0 0">Station-level check-ins and arrivals without exact GPS exposure.</p></div><span class="status-chip accent">Modeled</span></div>
+              <div class="settings-row"><span class="station-index">B</span><div><strong class="small">Stripe billing</strong><p class="small muted" style="margin:3px 0 0">Premium tier, boosts, verification, and invite limits.</p></div><span class="status-chip">Stubbed</span></div>
+              <div class="settings-row"><span class="station-index">W</span><div><strong class="small">Webhook events</strong><p class="small muted" style="margin:3px 0 0">Invite accepted, report opened, user blocked, check-in expired.</p></div><span class="status-chip accent">Ready shape</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
               <h3 class="card-title">Audit log</h3>
               <span class="status-chip success">Retention ready</span>
             </div>
@@ -6149,7 +6218,7 @@
             </div>
             <div class="admin-grid">
               <div class="admin-tile"><strong>Reports</strong><span>${state.reported ? "1 open report" : "0 open reports"}</span></div>
-              <div class="admin-tile"><strong>Banned users</strong><span>0 in demo</span></div>
+              <div class="admin-tile"><strong>Banned users</strong><span>0 active</span></div>
               <div class="admin-tile"><strong>Flagged statuses</strong><span>Explicit public terms blocked</span></div>
               <div class="admin-tile"><strong>Invite abuse</strong><span>Rate limits and blocks tracked</span></div>
               <div class="admin-tile"><strong>Block patterns</strong><span>${state.blocked ? "1 active block" : "No active patterns"}</span></div>
