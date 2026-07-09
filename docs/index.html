@@ -795,6 +795,55 @@
         line-height: 1.08;
       }
 
+      .benchmark-stack,
+      .experience-blueprint {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .benchmark-card,
+      .blueprint-card {
+        min-height: 116px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
+          #0b1016;
+        padding: 12px;
+        display: grid;
+        align-content: space-between;
+        gap: 10px;
+      }
+
+      .benchmark-card strong,
+      .blueprint-card strong {
+        display: block;
+        margin: 0;
+        font-size: 13px;
+      }
+
+      .benchmark-card span,
+      .blueprint-card span {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .benchmark-card.accent {
+        border-color: rgba(77, 215, 189, 0.28);
+        background:
+          linear-gradient(180deg, rgba(77, 215, 189, 0.09), transparent),
+          #0b1016;
+      }
+
+      .benchmark-card.warning {
+        border-color: rgba(246, 200, 95, 0.3);
+        background:
+          linear-gradient(180deg, rgba(246, 200, 95, 0.08), transparent),
+          #0b1016;
+      }
+
       .ev-command-center {
         border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 10px;
@@ -806,6 +855,135 @@
         display: grid;
         gap: 12px;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      }
+
+      .station-marketplace {
+        border: 1px solid rgba(77, 215, 189, 0.24);
+        border-radius: 10px;
+        background:
+          linear-gradient(135deg, rgba(77, 215, 189, 0.08), rgba(59, 130, 246, 0.055)),
+          #080c11;
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .market-command-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .market-stat {
+        min-height: 70px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        background: rgba(7, 10, 13, 0.72);
+        padding: 10px;
+        display: grid;
+        align-content: space-between;
+        gap: 7px;
+      }
+
+      .market-stat strong {
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .market-stat span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.2;
+      }
+
+      .station-score-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .score-ring {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #04110d;
+        font-size: 15px;
+        font-weight: 950;
+        background:
+          conic-gradient(var(--accent-2) 0 var(--score, 86%), rgba(255, 255, 255, 0.1) var(--score, 86%) 100%);
+      }
+
+      .score-ring span {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #071012;
+        color: #d8fff7;
+      }
+
+      .station-score-copy {
+        display: grid;
+        gap: 5px;
+      }
+
+      .station-score-copy strong {
+        font-size: 13px;
+      }
+
+      .station-score-copy span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.25;
+      }
+
+      .charger-health {
+        display: grid;
+        gap: 6px;
+      }
+
+      .health-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .health-meter {
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .health-meter > span {
+        display: block;
+        height: 100%;
+        width: var(--health, 86%);
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--spark));
+      }
+
+      .amenity-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .amenity-pill {
+        min-height: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: #0c1218;
+        color: #dbeafe;
+        padding: 6px 9px;
+        font-size: 10px;
+        font-weight: 800;
       }
 
       .vehicle-dashboard {
@@ -981,6 +1159,7 @@
       .station-panel-conditional.active.directory-results,
       .station-panel-conditional.active.station-panel-grid,
       .station-panel-conditional.active.ev-command-center,
+      .station-panel-conditional.active.station-marketplace,
       .station-panel-conditional.active.demo-data-banner,
       .station-panel-conditional.active.near-me-panel {
         display: grid;
@@ -1492,6 +1671,69 @@
         padding: 13px;
         display: grid;
         gap: 10px;
+      }
+
+      .driver-operating-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .driver-mode-card {
+        min-height: 80px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        background: #0b1016;
+        padding: 10px;
+        display: grid;
+        gap: 6px;
+      }
+
+      .driver-mode-card strong {
+        font-size: 12px;
+        line-height: 1.1;
+      }
+
+      .driver-mode-card span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.25;
+      }
+
+      .driver-mode-card.private {
+        border-color: rgba(246, 200, 95, 0.3);
+        background: rgba(246, 200, 95, 0.07);
+      }
+
+      .deck-stage {
+        display: grid;
+        gap: 10px;
+      }
+
+      .deck-stage-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .deck-stage-header strong {
+        font-size: 13px;
+      }
+
+      .deck-stage-header span {
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .deck-guardrail {
+        border: 1px solid rgba(77, 215, 189, 0.18);
+        border-radius: 8px;
+        background: rgba(77, 215, 189, 0.055);
+        padding: 10px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.35;
       }
 
       .driver-stack {
@@ -2810,6 +3052,10 @@
         .console-large,
         .console-grid,
         .enterprise-strip,
+        .benchmark-stack,
+        .experience-blueprint,
+        .market-command-row,
+        .driver-operating-strip,
         .ops-dashboard,
         .role-grid,
         .maturity-grid,
@@ -2852,6 +3098,10 @@
 
         .metric-grid,
         .command-grid,
+        .market-command-row,
+        .benchmark-stack,
+        .experience-blueprint,
+        .driver-operating-strip,
         .station-utility-grid,
         .compact-summary-row {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3032,6 +3282,19 @@
             <div class="console-card">
               <strong>Commercial Readiness</strong>
               <p class="small muted">Premium, verification, fleet, station host, and operator workflows are represented without changing the consumer app surface.</p>
+            </div>
+          </section>
+
+          <section class="console-card">
+            <div class="console-top">
+              <strong>Recommended product model</strong>
+              <span class="status-chip success">Rebuilt UX</span>
+            </div>
+            <div class="benchmark-stack">
+              <div class="benchmark-card accent"><strong>EV command home</strong><span>Vehicle-first status, charging context, and fast actions for a Tesla-app level feel.</span></div>
+              <div class="benchmark-card"><strong>Station marketplace</strong><span>Search, reliability, amenities, access, and availability patterns inspired by mature charging apps.</span></div>
+              <div class="benchmark-card"><strong>Driver discovery</strong><span>Friendly networking cards with pass, Spark, and Network actions before chat unlocks.</span></div>
+              <div class="benchmark-card warning"><strong>Consent vault</strong><span>Mutual Intent stays behind age, opt-in, visibility consent, recipient match, and invite acceptance.</span></div>
             </div>
           </section>
 
@@ -3855,6 +4118,27 @@
         if (tags.includes("Movie friendly")) return "Movie-friendly";
         if (tags.includes("Road trip tips")) return "Road trip hub";
         return Number(charger?.sourceId || 1) % 2 ? "Quiet" : "Family-friendly";
+      }
+
+      function stationScore(charger) {
+        const seed = Number(charger?.sourceId || 1);
+        const ports = Math.min(24, Number(charger?.ports || 1));
+        return Math.min(98, 74 + (ports % 16) + (seed % 9));
+      }
+
+      function stationReliability(charger) {
+        const seed = Number(charger?.sourceId || 1);
+        return Math.min(99, 91 + (seed % 8));
+      }
+
+      function stationAmenities(charger) {
+        const seed = Number(charger?.sourceId || 1);
+        const amenities = ["Restrooms", "Lighting"];
+        if (seed % 2 === 0) amenities.push("Coffee");
+        if (seed % 3 === 0) amenities.push("Food");
+        if (seed % 5 === 0) amenities.push("Retail");
+        if (charger?.type === "destination") amenities.push("Hotel");
+        return amenities.slice(0, 5);
       }
 
       function passesQuickFilter(charger) {
@@ -4816,6 +5100,19 @@
             </div>
           </section>
 
+          <section class="card">
+            <div class="section-title-row">
+              <h3 class="card-title">Experience blueprint</h3>
+              <span class="status-chip success">Recommended model</span>
+            </div>
+            <div class="experience-blueprint">
+              <div class="blueprint-card"><strong>EV command</strong><span>Vehicle status, charging context, and fast station actions.</span></div>
+              <div class="blueprint-card"><strong>Station utility</strong><span>Search, reliability, amenities, ports, and availability confidence.</span></div>
+              <div class="blueprint-card"><strong>Social discovery</strong><span>Pass, Spark, or Network with chat locked until acceptance.</span></div>
+              <div class="blueprint-card"><strong>Consent vault</strong><span>Mutual Intent stays hidden until every adult opt-in gate is active.</span></div>
+            </div>
+          </section>
+
           <section class="card search-panel">
             <div class="search-grid">
               <label>Search
@@ -4941,6 +5238,32 @@
           </section>
 
           ${stationViewSwitch()}
+
+          <section class="station-marketplace station-panel-conditional ${state.stationPanel === "search" ? "active" : ""}">
+            <div class="card-top">
+              <div>
+                <span class="small muted">Station marketplace</span>
+                <h3 class="card-title">${selected ? esc(selected.name) : "Select a station"}</h3>
+                <p class="small muted" style="margin:5px 0 0">A simple ChargePoint-style station decision view: availability, reliability, amenities, and social presence before you open the station.</p>
+              </div>
+              <span class="status-chip success">${selected ? stationScore(selected) : 0} score</span>
+            </div>
+            <div class="market-command-row">
+              <div class="market-stat"><strong>${stats ? stats.charging : 0}</strong><span>drivers here</span></div>
+              <div class="market-stat"><strong>${stats ? stats.arriving : 0}</strong><span>arriving soon</span></div>
+              <div class="market-stat"><strong>${selected ? stationReliability(selected) : 0}%</strong><span>reliability signal</span></div>
+              <div class="market-stat"><strong>${selected ? formatNumber(selected.ports) : 0}</strong><span>ports listed</span></div>
+            </div>
+            ${selected ? `
+              <div class="charger-health">
+                <div class="health-labels"><span>Availability confidence</span><strong>${stationAvailability(selected).label}</strong></div>
+                <div class="health-meter" style="--health:${stationScore(selected)}%"><span></span></div>
+              </div>
+              <div class="amenity-row">
+                ${stationAmenities(selected).map((amenity) => `<span class="amenity-pill">${esc(amenity)}</span>`).join("")}
+              </div>
+            ` : ""}
+          </section>
 
           <section class="card search-panel directory-search-panel">
             <label>Search chargers
@@ -5169,6 +5492,9 @@
         const saved = state.savedStationIds.includes(charger.id);
         const availability = stationAvailability(charger);
         const vibe = stationVibe(charger);
+        const score = stationScore(charger);
+        const reliability = stationReliability(charger);
+        const amenities = stationAmenities(charger);
         return `
           <section class="card directory-result">
             <div class="result-heading">
@@ -5179,10 +5505,24 @@
               </div>
               <span class="status-chip ${statusClass}">${chargerKindLabel(charger.type)}</span>
             </div>
+            <div class="station-score-row">
+              <div class="score-ring" style="--score:${score}%"><span>${score}</span></div>
+              <div class="station-score-copy">
+                <strong>Station quality score</strong>
+                <span>${reliability}% reliability signal, ${esc(availability.label.toLowerCase())}, ${amenities.slice(0, 3).map(esc).join(", ")}.</span>
+              </div>
+            </div>
+            <div class="charger-health">
+              <div class="health-labels"><span>Live readiness</span><strong>${reliability}%</strong></div>
+              <div class="health-meter" style="--health:${reliability}%"><span></span></div>
+            </div>
             <div class="trust-row">
               <span class="trust-badge availability-chip ${availability.className}">${esc(availability.label)}</span>
               <span class="trust-badge">${esc(vibe)}</span>
               <span class="trust-badge">Sample driver presence</span>
+            </div>
+            <div class="amenity-row">
+              ${amenities.map((amenity) => `<span class="amenity-pill">${esc(amenity)}</span>`).join("")}
             </div>
             <div class="utility-strip">
               <span><strong>${esc(charger.hours || "Hours unknown")}</strong>Access hours</span>
@@ -5321,6 +5661,19 @@
 
           <section class="card">
             <div class="section-title-row">
+              <h3 class="card-title">Discovery modes</h3>
+              <span class="status-chip ${privateMode ? "warning" : "accent"}">${privateMode ? "Private layer visible" : "Public layer"}</span>
+            </div>
+            <div class="driver-operating-strip">
+              <div class="driver-mode-card"><strong>Meet</strong><span>Casual charging conversation and quick station hangouts.</span></div>
+              <div class="driver-mode-card"><strong>Network</strong><span>Founders, operators, investors, and EV business contacts.</span></div>
+              <div class="driver-mode-card"><strong>Car talk</strong><span>Tesla, EV mods, road trip planning, and charging tips.</span></div>
+              <div class="driver-mode-card private"><strong>Mutual Intent</strong><span>${privateMode ? "Verified adults only after consent." : "Hidden until 18+ opt-in and visibility consent."}</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-title-row">
               <h3 class="card-title">People here</h3>
               <span class="status-chip ${privateMode ? "warning" : "accent"}">${privateMode ? "Mutual Intent" : "Social"}</span>
             </div>
@@ -5351,21 +5704,31 @@
             </div>
           </section>
 
-          <section class="driver-stack">
-            ${drivers.map((driver, index) => renderDriver({
-              initial: driver.initial,
-              name: driver.name,
-              meta: `${driver.vehicle} - ${driver.city}`,
-              status: driver.status || driver.intent,
-              chips: driver.interests,
-              primary: privateMode ? "Mutual Intent invite" : index === 0 ? "Coffee nearby" : "Business networking",
-              secondary: privateMode ? "Chat first" : index === 0 ? "Road trip tips" : "Talk EVs",
-              avatar: privateMode ? "amber" : index === 0 ? "" : "green",
-              note: driver.note,
-              privateIntent: driver.intent,
-              privateIntents: driver.privateIntents,
-              privateMode
-            })).join("")}
+          <section class="card deck-stage">
+            <div class="deck-stage-header">
+              <div>
+                <strong>Card stack</strong>
+                <span>Swipe-style discovery, enterprise-safe invite policy.</span>
+              </div>
+              <span class="status-chip ${privateMode ? "warning" : "success"}">${privateMode ? "Mutual pool" : "Social pool"}</span>
+            </div>
+            <div class="driver-stack">
+              ${drivers.map((driver, index) => renderDriver({
+                initial: driver.initial,
+                name: driver.name,
+                meta: `${driver.vehicle} - ${driver.city}`,
+                status: driver.status || driver.intent,
+                chips: driver.interests,
+                primary: privateMode ? "Mutual Intent invite" : index === 0 ? "Coffee nearby" : "Business networking",
+                secondary: privateMode ? "Chat first" : index === 0 ? "Road trip tips" : "Talk EVs",
+                avatar: privateMode ? "amber" : index === 0 ? "" : "green",
+                note: driver.note,
+                privateIntent: driver.intent,
+                privateIntents: driver.privateIntents,
+                privateMode
+              })).join("")}
+            </div>
+            <div class="deck-guardrail">Direct messaging is disabled until an invite is accepted. Mutual Intent cards only render when both drivers are verified adults with the private visibility layer enabled.</div>
           </section>
 
           <section class="card">

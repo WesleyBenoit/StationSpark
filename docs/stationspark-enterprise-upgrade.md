@@ -17,3 +17,12 @@ Move the static StationSpark demo from a polished consumer prototype toward an e
 - Added integration health surfaces for Supabase Auth, Supabase Realtime, Stripe billing, map provider fallback, push notifications, and webhook events.
 - Replaced visible prototype and consumer-comparison language with network, operator, control-plane, invite, and governance language.
 - Preserved invite-before-chat, station-level privacy, block/report, and Mutual Intent consent constraints.
+
+## Recommendation-Driven Rebuild
+
+- Reframed the UX around four product layers: EV command home, station marketplace, driver discovery, and consent vault.
+- Added desktop and mobile `Recommended product model` surfaces so stakeholders understand the benchmark strategy without making StationSpark look like a clone.
+- Added station marketplace signals: quality score, reliability signal, availability confidence, amenities, listed ports, access hours, and station-level driver presence.
+- Strengthened the Drivers screen with explicit discovery modes: Meet, Network, Car Talk, and Mutual Intent.
+- Rebuilt the card stack presentation around pass, Spark, and Network actions while preserving the rule that chat is locked until an invite is accepted.
+- Kept Mutual Intent behind 18+ confirmation, mode opt-in, private visibility consent, matching recipient opt-in, and invite acceptance.

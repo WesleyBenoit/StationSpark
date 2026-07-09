@@ -146,6 +146,7 @@ try {
   assert('enterprise console shows operations metrics and roles', text().includes('drivers online') && text().includes('arrival intents') && text().includes('Role-based views') && text().includes('Fleet / operator'), 'ops roles');
   assert('enterprise console shows maturity and governance', text().includes('Trust infrastructure') && text().includes('Compliance & data governance') && text().includes('API-ready') && text().includes('Webhook-ready'), 'governance maturity');
   assert('enterprise console shows security and integration posture', text().includes('SAML / OIDC SSO') && text().includes('RBAC policies') && text().includes('Integration health') && text().includes('target uptime SLA'), 'security posture');
+  assert('enterprise console shows recommendation-driven rebuild model', text().includes('Recommended product model') && text().includes('EV command home') && text().includes('Station marketplace') && text().includes('Consent vault'), 'recommended model');
   assert('bottom nav uses Stations label', !!buttonByText('Stations'), 'stations nav');
   assert('station finder has no globe canvas', !document.getElementById('chargerCanvas'), 'no canvas');
   assert('station finder exposes near me flow', !!buttonByText('Find stations near me') && text().includes('Near Me'), 'near me');
@@ -194,6 +195,7 @@ try {
   assert('station finder has fast filters and saved stations', text().includes('Open Now') && text().includes('Drivers Here') && text().includes('Saved stations') && text().includes('Recent stations'), 'filters/saved');
   assert('station finder labels sample operations clearly', text().includes('Sample station activity') && text().includes('Sample driver presence'), 'sample labels');
   assert('station finder shows enterprise EV social model', text().includes('EV command center') && text().includes('Product model') && text().includes('EV command workflow') && text().includes('Professional discovery layer'), 'enterprise model');
+  assert('station finder shows station marketplace rebuild', text().includes('Station marketplace') && text().includes('reliability signal') && text().includes('ports listed') && text().includes('Availability confidence'), 'station marketplace');
   assert('station finder includes first-run onboarding', text().includes('First-run setup') && text().includes('Confirm 18+'), 'onboarding');
   assert('station finder includes route mode', text().includes('Route mode') && !!buttonByText('Show route chargers'), 'route mode');
   buttonByText('Show route chargers').click();
@@ -246,6 +248,7 @@ try {
 
   setTab('home');
   await wait(120);
+  assert('overview shows mobile experience blueprint', text().includes('Experience blueprint') && text().includes('EV command') && text().includes('Station utility') && text().includes('Consent vault'), 'experience blueprint');
   const contentNode = document.getElementById('appContent');
   contentNode.scrollTop = contentNode.scrollHeight;
   await wait(80);
@@ -321,6 +324,7 @@ try {
   assert('station detail has marketplace-style driver tabs', text().includes('Here Now') && text().includes('Arriving') && text().includes('Open to Chat') && text().includes('Networking'), 'driver tabs');
   assert('drivers screen has here-now layout and trust badges', text().includes('Drivers Here Now') && text().includes('Age confirmed') && text().includes('Respectful rating'), 'drivers/trust');
   assert('drivers screen has tinder-style discovery deck', text().includes('Driver discovery deck') && text().includes('Pass') && text().includes('Spark') && document.querySelectorAll('.match-card').length > 0, document.querySelectorAll('.match-card').length);
+  assert('drivers screen shows rebuilt discovery modes and guardrails', text().includes('Discovery modes') && text().includes('Meet') && text().includes('Network') && text().includes('Card stack') && text().includes('Direct messaging is disabled until an invite is accepted'), 'driver modes');
   assert('do not disturb driver is visible but not inviteable', text().includes('Do not disturb') && text().includes('not inviteable'), 'dnd');
   assert('station shows availability and vibe', text().includes('Likely busy') || text().includes('Open stalls likely') || text().includes('Quiet station') || text().includes('High driver activity'), 'availability');
   buttonByText('Join Station').click();
